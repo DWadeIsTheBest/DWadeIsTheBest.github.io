@@ -99,7 +99,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -353,7 +353,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  73
+                  73个字
                 </span>
               
 
@@ -369,7 +369,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  1分钟
                 </span>
               
             </div>
@@ -597,9 +597,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="https://www.jianshu.com/u/bb2db3428fff" target="_blank" title="简书">
+                    <a href="https://www.jianshu.com/u/bb2db3428fff" target="_blank" title="jianshu">
                       
-                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
                   </span>
                 
             </div>
@@ -694,6 +694,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -1195,7 +1197,7 @@
     
       flOptions = {};
       
-          flOptions.iconStyle = "box";
+          flOptions.iconStyle = "default";
       
           flOptions.boxForm = "horizontal";
       
