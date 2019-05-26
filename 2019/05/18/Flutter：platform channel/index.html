@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="UI,">
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="Despite knowing the journey and where it leads, I embrace it and welcome every moment.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dwyane Blog">
-<meta property="og:url" content="http://nihao6.top/categories/iOS/index.html">
+<meta name="description" content="Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。 参考文献：Writing custom platform-specific code Flutter与原生之间的通信依赖灵活的消息传递方式： 应用的Flutter部分通过平台通道（platform channel）将消息">
+<meta name="keywords" content="UI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter：platform channel">
+<meta property="og:url" content="http://nihao6.top/2019/05/18/Flutter：platform channel/index.html">
 <meta property="og:site_name" content="Dwyane Blog">
-<meta property="og:description" content="Despite knowing the journey and where it leads, I embrace it and welcome every moment.">
+<meta property="og:description" content="Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。 参考文献：Writing custom platform-specific code Flutter与原生之间的通信依赖灵活的消息传递方式： 应用的Flutter部分通过平台通道（platform channel）将消息">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-1c1c39fa82ab539e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-9172502f169dd057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440">
+<meta property="og:updated_time" content="2019-05-26T16:21:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dwyane Blog">
-<meta name="twitter:description" content="Despite knowing the journey and where it leads, I embrace it and welcome every moment.">
+<meta name="twitter:title" content="Flutter：platform channel">
+<meta name="twitter:description" content="Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。 参考文献：Writing custom platform-specific code Flutter与原生之间的通信依赖灵活的消息传递方式： 应用的Flutter部分通过平台通道（platform channel）将消息">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1396454-1c1c39fa82ab539e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://nihao6.top/categories/iOS/">
+  <link rel="canonical" href="http://nihao6.top/2019/05/18/Flutter：platform channel/">
 
 
 
 
 
-  <title>分类: iOS | Dwyane Blog</title>
+  <title>Flutter：platform channel | Dwyane Blog</title>
   
 
 
@@ -143,7 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,53 +274,285 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>iOS<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nihao6.top/2019/05/18/Flutter：platform channel/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dwyane">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dwyane Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/05/15/fatman/" itemprop="url">
-              
-                <span itemprop="name">fatman</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Flutter：platform channel</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-15T22:52:34+08:00" content="2019-05-15">
-          05-15
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-18T12:01:34+08:00">
+                2019-05-18
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+                    
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 更新于
+              <time itemprop="dateUpdated" datetime="2019-05-27T00:21:06+08:00" content="2019-05-27">
+                2019-05-27
+              </time>
+            </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Flutter/" itemprop="url" rel="index">
+                    <span itemprop="name">Flutter</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k个字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。</p>
+<p>参考文献：<a href="https://flutter.dev/docs/development/platform-integration/platform-channels" target="_blank" rel="noopener">Writing custom platform-specific code</a></p>
+<h3 id="Flutter与原生之间的通信依赖灵活的消息传递方式："><a href="#Flutter与原生之间的通信依赖灵活的消息传递方式：" class="headerlink" title="Flutter与原生之间的通信依赖灵活的消息传递方式："></a>Flutter与原生之间的通信依赖灵活的消息传递方式：</h3><ul>
+<li>应用的Flutter部分通过平台通道（platform channel）将消息发送到其应用程序的所在的宿主（iOS或Android）应用（原生应用）。</li>
+<li>宿主监听平台通道，并接收该消息。然后它会调用该平台的API，并将响应发送回客户端，即应用程序的Flutter部分。</li>
+</ul>
+<h3 id="平台通道"><a href="#平台通道" class="headerlink" title="平台通道"></a>平台通道</h3><p>使用平台通道在Flutter(client)和原生(host)之间传递消息，如下图所示：<br><img src="https://upload-images.jianshu.io/upload_images/1396454-1c1c39fa82ab539e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540" alt="image.png"></p>
+<p>当在Flutter中调用原生方法时，调用信息通过平台通道传递到原生，原生收到调用信息后方可执行指定的操作，如需返回数据，则原生会将数据再通过平台通道传递给Flutter。值得注意的是消息传递是异步的，这确保了用户界面在消息传递时不会被挂起。</p>
+<p>在客户端，<a href="https://docs.flutter.io/flutter/services/MethodChannel-class.html" target="_blank" rel="noopener">MethodChannel API</a> 可以发送与方法调用相对应的消息。 在宿主平台上，<code>MethodChannel</code> 在<a href="https://docs.flutter.io/javadoc/io/flutter/plugin/common/MethodChannel.html" target="_blank" rel="noopener">Android API</a> 和 <code>FlutterMethodChannel</code>在 <a href="https://docs.flutter.io/objcdoc/Classes/FlutterMethodChannel.html" target="_blank" rel="noopener">iOS API</a>可以接收方法调用并返回结果。这些类可以帮助我们用很少的代码就能开发平台插件。</p>
+<blockquote>
+<p><strong>注意</strong>: 如果需要，方法调用(消息传递)可以是反向的，即宿主作为客户端调用Dart中实现的API。 <a href="https://pub.dartlang.org/packages/quick_actions" target="_blank" rel="noopener"><code>quick_actions</code></a>插件就是一个具体的例子。</p>
+</blockquote>
+<h3 id><a href="#" class="headerlink" title></a><a href="https://github.com/flutterchina/flutter-in-action/blob/master/docs/chapter11/platform-channel.md#%E5%B9%B3%E5%8F%B0%E9%80%9A%E9%81%93" target="_blank" rel="noopener"></a></h3><p>创建一个新的应用程序项目<br>首先创建一个新的应用程序:</p>
+<p>在终端中运行：flutter create systemversion<br>默认情况下，模板支持使用Java编写Android代码，或使用Objective-C编写iOS代码。要使用Kotlin或Swift，请使用-i和/或-a标志:</p>
+<p>在终端中运行: flutter create -i swift -a kotlin systemversion</p>
+<h3 id="Flutter端代码"><a href="#Flutter端代码" class="headerlink" title="Flutter端代码"></a>Flutter端代码</h3><p>首先，我们构建通道。我们使用MethodChannel调用一个方法来返回系统版本。</p>
+<p>通道的客户端和宿主通过通道构造函数中传递的通道名称进行连接。单个应用中使用的所有通道名称必须是唯一的; 我们建议在通道名称前加一个唯一的“域名前缀”，例如samples.flutter.io/systemVersion。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">import &apos;dart:async&apos;;</span><br><span class="line"></span><br><span class="line">import &apos;package:flutter/material.dart&apos;;</span><br><span class="line">import &apos;package:flutter/services.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() =&gt; runApp(MyApp());</span><br><span class="line"></span><br><span class="line">class MyApp extends StatefulWidget &#123;</span><br><span class="line">  // This widget is the root of your application.</span><br><span class="line">  @override</span><br><span class="line">  State&lt;StatefulWidget&gt; createState() &#123;</span><br><span class="line">    // TODO: implement createState</span><br><span class="line">    return MyAppState();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyAppState extends State&lt;MyApp&gt; &#123;</span><br><span class="line"></span><br><span class="line">static const platform = const MethodChannel(&apos;samples.flutter.io/systemVersion&apos;);</span><br><span class="line"> // Get battery level.</span><br><span class="line">  String _systemVersion = &apos;Unknown system version.&apos;;</span><br><span class="line"></span><br><span class="line">// 我们调用通道上的方法，指定通过字符串标识符调用方法getSystemVersion。 </span><br><span class="line">// 该调用可能失败(平台不支持平台API，例如在模拟器中运行时)，</span><br><span class="line">// 所以我们将invokeMethod调用包装在try-catch语句中</span><br><span class="line">  Future&lt;Null&gt; _getSystemVersion() async &#123;</span><br><span class="line">    String systemVersion;</span><br><span class="line">    try &#123;</span><br><span class="line">      final String result = await platform.invokeMethod(&apos;systemVersion&apos;);</span><br><span class="line">      systemVersion = &apos;iOS当前系统 $result.&apos;;</span><br><span class="line">    &#125; on PlatformException catch (e) &#123;</span><br><span class="line">      systemVersion = &quot;Failed to get system version: &apos;$&#123;e.message&#125;&apos;.&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    // 在setState中来更新用户界面状态systemVersion</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      _systemVersion = systemVersion;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">// 我们在build创建包含一个小字体显示当前系统systemVersion</span><br><span class="line">// 和一个用于刷新值的按钮的用户界面。</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return MaterialApp(</span><br><span class="line">        title: &apos;Flutter Demo&apos;,</span><br><span class="line">        theme: ThemeData(</span><br><span class="line">          primarySwatch: Colors.blue,</span><br><span class="line">        ),</span><br><span class="line">        home: Scaffold(</span><br><span class="line">          appBar: AppBar(title: Text(&quot;platform channel：与原生交互&quot;),),</span><br><span class="line">          body: Center(</span><br><span class="line">              </span><br><span class="line">              child: new Column(</span><br><span class="line">                children: &lt;Widget&gt;[</span><br><span class="line">                  RaisedButton(</span><br><span class="line">                onPressed: ()&#123;_getSystemVersion();&#125;,</span><br><span class="line">                child: Text(&apos;show current systemVersion&apos;),</span><br><span class="line">              ),</span><br><span class="line">              Text(_systemVersion),</span><br><span class="line">                ],</span><br><span class="line">              )</span><br><span class="line">          ),</span><br><span class="line">        )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="iOS端代码"><a href="#iOS端代码" class="headerlink" title="iOS端代码"></a>iOS端代码</h3><p>我们接着之前”获取当前系统版本”插件的示例，来完成iOS端API的实现。以下步骤使用Objective-C</p>
+<p>首先打开Xcode中Flutter应用程序的iOS部分:</p>
+<ol>
+<li>启动 Xcode</li>
+<li>选择 File &gt; Open…</li>
+<li>定位到您 Flutter app目录, 然后选择里面的 iOS文件夹，点击 OK</li>
+<li>确保Xcode项目的构建没有错误。</li>
+<li>选择 Runner &gt; Runner ，打开AppDelegate.m</li>
+</ol>
+<p>接下来，在application didFinishLaunchingWithOptions:方法内部创建一个FlutterMethodChannel，并添加一个处理方法。 确保与在Flutter客户端使用的通道名称相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// ----------  AppDelegate.m  ----------</span><br><span class="line">#include &quot;AppDelegate.h&quot;</span><br><span class="line">#include &quot;GeneratedPluginRegistrant.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation AppDelegate</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application</span><br><span class="line">    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    [GeneratedPluginRegistrant registerWithRegistry:self];</span><br><span class="line">    FlutterViewController* controller = (FlutterViewController*)self.window.rootViewController;</span><br><span class="line">    FlutterMethodChannel* systemVersionChannel = [FlutterMethodChannel</span><br><span class="line">                                            methodChannelWithName:@&quot;samples.flutter.io/systemVersion&quot;</span><br><span class="line">                                            binaryMessenger:controller];</span><br><span class="line">    </span><br><span class="line">    [systemVersionChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) &#123;</span><br><span class="line">        if ([@&quot;systemVersion&quot; isEqualToString:call.method]) &#123;</span><br><span class="line">            result([self getSystemVersion]); // 回调数据</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            result(FlutterMethodNotImplemented);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">  // Override point for customization after application launch.</span><br><span class="line">  return [super application:application didFinishLaunchingWithOptions:launchOptions];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)getSystemVersion &#123;</span><br><span class="line">    UIDevice* device = UIDevice.currentDevice;</span><br><span class="line">    NSLog(@&quot;systemVersion==%@&quot;, device.systemVersion);</span><br><span class="line">     return device.systemVersion;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="https://upload-images.jianshu.io/upload_images/1396454-9172502f169dd057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440" alt="image.png"></p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://raw.githubusercontent.com/iDwyane/Dwyane.github.io/master/images/wechat-qcode.jpg" alt="Dwyane wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Dwyane
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://nihao6.top/2019/05/18/Flutter：platform channel/" title="Flutter：platform channel">http://nihao6.top/2019/05/18/Flutter：platform channel/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UI/" rel="tag"># UI</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/16/跳转界面时组件动画效果/" rel="next" title="跳转界面时组件动画效果">
+                <i class="fa fa-chevron-left"></i> 跳转界面时组件动画效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -323,6 +560,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -343,8 +584,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -423,6 +673,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flutter与原生之间的通信依赖灵活的消息传递方式："><span class="nav-number">1.</span> <span class="nav-text">Flutter与原生之间的通信依赖灵活的消息传递方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平台通道"><span class="nav-number">2.</span> <span class="nav-text">平台通道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flutter端代码"><span class="nav-number">4.</span> <span class="nav-text">Flutter端代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS端代码"><span class="nav-number">5.</span> <span class="nav-text">iOS端代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -450,7 +716,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.8k</span>
+    <span title="Site words total count">4.9k</span>
   
 </div>
 
@@ -587,6 +853,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
