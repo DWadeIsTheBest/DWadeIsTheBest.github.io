@@ -88,8 +88,8 @@
 <meta property="og:description" content="Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。 参考文献：Writing custom platform-specific code Flutter与原生之间的通信依赖灵活的消息传递方式： 应用的Flutter部分通过平台通道（platform channel）将消息">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-1c1c39fa82ab539e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-9172502f169dd057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440">
-<meta property="og:updated_time" content="2019-05-27T15:44:18.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-9172502f169dd057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/340">
+<meta property="og:updated_time" content="2019-05-27T15:52:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="平台通道platform channel">
 <meta name="twitter:description" content="Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。 参考文献：Writing custom platform-specific code Flutter与原生之间的通信依赖灵活的消息传递方式： 应用的Flutter部分通过平台通道（platform channel）将消息">
@@ -331,7 +331,7 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 更新于
-              <time itemprop="dateUpdated" datetime="2019-05-27T23:44:18+08:00" content="2019-05-27">
+              <time itemprop="dateUpdated" datetime="2019-05-27T23:52:57+08:00" content="2019-05-27">
                 2019-05-27
               </time>
             </span>
@@ -452,7 +452,8 @@
 </ol>
 <p>接下来，在application didFinishLaunchingWithOptions:方法内部创建一个FlutterMethodChannel，并添加一个处理方法。 确保与在Flutter客户端使用的通道名称相同。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// ----------  AppDelegate.m  ----------</span><br><span class="line">#include &quot;AppDelegate.h&quot;</span><br><span class="line">#include &quot;GeneratedPluginRegistrant.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation AppDelegate</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application</span><br><span class="line">    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    [GeneratedPluginRegistrant registerWithRegistry:self];</span><br><span class="line">    FlutterViewController* controller = (FlutterViewController*)self.window.rootViewController;</span><br><span class="line">    FlutterMethodChannel* systemVersionChannel = [FlutterMethodChannel</span><br><span class="line">                                            methodChannelWithName:@&quot;samples.flutter.io/systemVersion&quot;</span><br><span class="line">                                            binaryMessenger:controller];</span><br><span class="line">    </span><br><span class="line">    [systemVersionChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) &#123;</span><br><span class="line">        if ([@&quot;systemVersion&quot; isEqualToString:call.method]) &#123;</span><br><span class="line">            result([self getSystemVersion]); // 回调数据</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            result(FlutterMethodNotImplemented);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">  // Override point for customization after application launch.</span><br><span class="line">  return [super application:application didFinishLaunchingWithOptions:launchOptions];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)getSystemVersion &#123;</span><br><span class="line">    UIDevice* device = UIDevice.currentDevice;</span><br><span class="line">    NSLog(@&quot;systemVersion==%@&quot;, device.systemVersion);</span><br><span class="line">     return device.systemVersion;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>效果如下：<br><img src="https://upload-images.jianshu.io/upload_images/1396454-9172502f169dd057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/440" alt="image.png"></p>
+<p>效果如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1396454-9172502f169dd057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/340" alt="image.png"></p>
 
       
     </div>
