@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="前言：有两个界面，如果在这两条路由上都有一个共同的视觉特性，那么在路由转换期间，将该特性物理地从一个页面移动到另一个页面，将有助于为用户确定该特性的方向。这样的动画叫做Hero动画。在过渡期间，Hero小部件在导航器的覆盖层中“飞翔”，当它们在飞行时，默认情况下，它们不会显示在新旧路线的原始位置。 要将小部件标记为这样的特性，请将其封装在Hero小部件中。当导航发生时，每个路由上的Hero小部件由">
+<meta name="description" content="Flutter包类似java中的jar包，iOS中的第三方框架，也是由全球众多开发者共同提供第三方库。巧用这些包资源，无须从头造轮子，提升效率。 [包仓库地址]https://pub.dev/ 今天我们使用一个存储库——shared_preferences 来讲解。 介绍shared_preferences仓库地址：https://pub.dev/packages/shared_preferenc">
 <meta name="keywords" content="UI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="跳转界面时组件动画效果">
-<meta property="og:url" content="http://nihao6.top/2019/05/16/跳转界面时组件动画效果/index.html">
+<meta property="og:title" content="Flutter:使用shared_preferences">
+<meta property="og:url" content="http://nihao6.top/2019/04/25/使用shared_preferences/index.html">
 <meta property="og:site_name" content="Dwyane Blog">
-<meta property="og:description" content="前言：有两个界面，如果在这两条路由上都有一个共同的视觉特性，那么在路由转换期间，将该特性物理地从一个页面移动到另一个页面，将有助于为用户确定该特性的方向。这样的动画叫做Hero动画。在过渡期间，Hero小部件在导航器的覆盖层中“飞翔”，当它们在飞行时，默认情况下，它们不会显示在新旧路线的原始位置。 要将小部件标记为这样的特性，请将其封装在Hero小部件中。当导航发生时，每个路由上的Hero小部件由">
+<meta property="og:description" content="Flutter包类似java中的jar包，iOS中的第三方框架，也是由全球众多开发者共同提供第三方库。巧用这些包资源，无须从头造轮子，提升效率。 [包仓库地址]https://pub.dev/ 今天我们使用一个存储库——shared_preferences 来讲解。 介绍shared_preferences仓库地址：https://pub.dev/packages/shared_preferenc">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-34a6d22960a249ea.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/200">
-<meta property="og:updated_time" content="2019-05-19T15:33:46.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-945e82923dad78f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/340">
+<meta property="og:updated_time" content="2019-06-03T14:01:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跳转界面时组件动画效果">
-<meta name="twitter:description" content="前言：有两个界面，如果在这两条路由上都有一个共同的视觉特性，那么在路由转换期间，将该特性物理地从一个页面移动到另一个页面，将有助于为用户确定该特性的方向。这样的动画叫做Hero动画。在过渡期间，Hero小部件在导航器的覆盖层中“飞翔”，当它们在飞行时，默认情况下，它们不会显示在新旧路线的原始位置。 要将小部件标记为这样的特性，请将其封装在Hero小部件中。当导航发生时，每个路由上的Hero小部件由">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1396454-34a6d22960a249ea.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/200">
+<meta name="twitter:title" content="Flutter:使用shared_preferences">
+<meta name="twitter:description" content="Flutter包类似java中的jar包，iOS中的第三方框架，也是由全球众多开发者共同提供第三方库。巧用这些包资源，无须从头造轮子，提升效率。 [包仓库地址]https://pub.dev/ 今天我们使用一个存储库——shared_preferences 来讲解。 介绍shared_preferences仓库地址：https://pub.dev/packages/shared_preferenc">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1396454-945e82923dad78f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/340">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://nihao6.top/2019/05/16/跳转界面时组件动画效果/">
+  <link rel="canonical" href="http://nihao6.top/2019/04/25/使用shared_preferences/">
 
 
 
 
 
-  <title>跳转界面时组件动画效果 | Dwyane Blog</title>
+  <title>Flutter:使用shared_preferences | Dwyane Blog</title>
   
 
 
@@ -287,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://nihao6.top/2019/05/16/跳转界面时组件动画效果/">
+    <link itemprop="mainEntityOfPage" href="http://nihao6.top/2019/04/25/使用shared_preferences/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dwyane">
@@ -304,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">跳转界面时组件动画效果</h1>
+          <h1 class="post-title" itemprop="name headline">Flutter:使用shared_preferences</h1>
         
 
         <div class="post-meta">
@@ -316,8 +316,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-16T22:54:34+08:00">
-                2019-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T22:52:34+08:00">
+                2019-04-25
               </time>
             
 
@@ -330,8 +330,8 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 更新于
-              <time itemprop="dateUpdated" datetime="2019-05-19T23:33:46+08:00" content="2019-05-19">
-                2019-05-19
+              <time itemprop="dateUpdated" datetime="2019-06-03T22:01:59+08:00" content="2019-06-03">
+                2019-06-03
               </time>
             </span>
           
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  737个字
+                  439个字
                 </span>
               
 
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3分钟
+                  2分钟
                 </span>
               
             </div>
@@ -422,13 +422,20 @@
       
 
       
-        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>有两个界面，如果在这两条路由上都有一个共同的视觉特性，那么在路由转换期间，将该特性物理地从一个页面移动到另一个页面，将有助于为用户确定该特性的方向。这样的动画叫做<code>Hero</code>动画。在过渡期间，<code>Hero</code>小部件在导航器的覆盖层中“飞翔”，当它们在飞行时，默认情况下，它们不会显示在新旧路线的原始位置。</p>
-<p>要将小部件标记为这样的特性，请将其封装在<code>Hero</code>小部件中。当导航发生时，每个路由上的<code>Hero</code>小部件由<code>HeroController</code>标识。对于具有相同标记的每一对<code>Hero</code>小部件，都会触发一个<code>Hero</code>动画。比如说，在首页有一张图，显示在顶部，第二个界面也有相同的图，展示在界面中间，从首页到第二页添加<code>Hero</code>后会有动画，表现形式如下：<br><img src="https://upload-images.jianshu.io/upload_images/1396454-34a6d22960a249ea.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/200" alt></p>
-<h3 id="1、创建展示相同图片的两个界面"><a href="#1、创建展示相同图片的两个界面" class="headerlink" title="1、创建展示相同图片的两个界面"></a>1、创建展示相同图片的两个界面</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当用户点击图像时，我们想要将图像从第一个界面到第二个界面有动画效果。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Scaffold(</span><br><span class="line">      appBar: <span class="keyword">new</span> AppBar(title: Text(<span class="string">'主页'</span>),),</span><br><span class="line">      body: GestureDetector(</span><br><span class="line">        onTap: ()&#123;</span><br><span class="line">          Navigator.push(context, MaterialPageRoute(</span><br><span class="line">            builder: (context) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">          ));</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Image.network(<span class="string">'https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1558288400704&amp;di=d136bc8e492fb1a93953405ee183103f&amp;imgtype=0&amp;src=http%3A%2F%2Fp1.ishecdn.com%2Fc%2F12538544_0_0_2_80.jpg'</span>),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailScreen</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      body: GestureDetector(</span><br><span class="line">        onTap: () &#123;</span><br><span class="line">          Navigator.pop(context);</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Center(</span><br><span class="line">          child: Image.network(</span><br><span class="line">            <span class="string">'https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1558288400704&amp;di=d136bc8e492fb1a93953405ee183103f&amp;imgtype=0&amp;src=http%3A%2F%2Fp1.ishecdn.com%2Fc%2F12538544_0_0_2_80.jpg'</span>,</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2、为首页添加hero组件"><a href="#2、为首页添加hero组件" class="headerlink" title="2、为首页添加hero组件"></a>2、为首页添加hero组件</h3><p>// 为了让两个界面用动画连接在一起，需要在两个界面的图像中用 Hero 包装，<br>// Hero 组件需要两个参数</p>
-<p>// 1、tag：hero 的标识，它必须跟所有界面相同<br>// 2、child: 我们希望跨屏幕动画的小部件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Hero(</span><br><span class="line">  tag: <span class="string">'imageHero'</span>,</span><br><span class="line">  child: Image.network(</span><br><span class="line">    <span class="string">'https://'</span>,</span><br><span class="line">  ),</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
-<h3 id="3、为第二页添加hero组件"><a href="#3、为第二页添加hero组件" class="headerlink" title="3、为第二页添加hero组件"></a>3、为第二页添加hero组件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Hero(</span><br><span class="line">  tag: &apos;imageHero&apos;,</span><br><span class="line">  child: Image.network(</span><br><span class="line">    &apos;https://&apos;,</span><br><span class="line">  ),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">    runApp(MaterialApp(</span><br><span class="line">      title: <span class="string">'过渡Demo'</span>,</span><br><span class="line">      home: MainPage(),</span><br><span class="line">    ));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1、Create two screens showing the same image</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当用户点击图像时，我们想要将图像从第一个界面到第二个界面有动画效果。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Scaffold(</span><br><span class="line">      appBar: <span class="keyword">new</span> AppBar(title: Text(<span class="string">'主页'</span>),),</span><br><span class="line">      body: GestureDetector(</span><br><span class="line">        onTap: ()&#123;</span><br><span class="line">          Navigator.push(context, MaterialPageRoute(</span><br><span class="line">            builder: (context) &#123;</span><br><span class="line">              <span class="keyword">return</span> DetailScreen();</span><br><span class="line">            &#125;</span><br><span class="line">          ));</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Hero(</span><br><span class="line">          tag: <span class="string">'imageHero1'</span>,</span><br><span class="line">          child: Image.network(<span class="string">'https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1558288400704&amp;di=d136bc8e492fb1a93953405ee183103f&amp;imgtype=0&amp;src=http%3A%2F%2Fp1.ishecdn.com%2Fc%2F12538544_0_0_2_80.jpg'</span>),</span><br><span class="line">        )</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailScreen</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      body: GestureDetector(</span><br><span class="line">        onTap: () &#123;</span><br><span class="line">          Navigator.pop(context);</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Center(</span><br><span class="line">          child: Hero(</span><br><span class="line">            tag: <span class="string">'imageHero1'</span>,</span><br><span class="line">            child: Image.network(</span><br><span class="line">            <span class="string">'https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1558288400704&amp;di=d136bc8e492fb1a93953405ee183103f&amp;imgtype=0&amp;src=http%3A%2F%2Fp1.ishecdn.com%2Fc%2F12538544_0_0_2_80.jpg'</span>,</span><br><span class="line">          ),</span><br><span class="line">          )</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>Flutter包类似java中的jar包，iOS中的第三方框架，也是由全球众多开发者共同提供第三方库。巧用这些包资源，无须从头造轮子，提升效率。</p>
+<p>[包仓库地址]<a href="https://pub.dev/" target="_blank" rel="noopener">https://pub.dev/</a></p>
+<p>今天我们使用一个存储库——shared_preferences 来讲解。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>shared_preferences仓库地址：<a href="https://pub.dev/packages/shared_preferences" target="_blank" rel="noopener">https://pub.dev/packages/shared_preferences</a></p>
+<blockquote>
+<p>shared_preferences：包装NSUserDefaults(在iOS上)和SharedPreferences(在Android上)，为简单数据提供一个持久存储。数据异步地保存到磁盘。两个平台都不能保证写操作在返回后被持久化到磁盘上，而且这个插件不能用于存储关键数据。</p>
+</blockquote>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>在 pubspec.yaml 里添加：</p>
+<p>dependencies:<br>  shared_preferences: ^0.5.2</p>
+<p>然后运行：</p>
+<p>flutter packages get</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter/material.dart&apos;;</span><br><span class="line">import &apos;package:shared_preferences/shared_preferences.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">  runApp(_CounterWidget());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class _CounterWidget extends StatefulWidget &#123;</span><br><span class="line">  @override</span><br><span class="line">  _CounterState createState() =&gt; _CounterState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class _CounterState extends State&lt;_CounterWidget&gt; &#123;</span><br><span class="line">  String countString = &apos;&apos;;</span><br><span class="line">  String localCount = &apos;&apos;;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return MaterialApp(</span><br><span class="line">      home: Scaffold(</span><br><span class="line">        appBar: new AppBar(</span><br><span class="line">          title: Text(&apos;Flutter存储--shared_preferences&apos;),</span><br><span class="line">        ),</span><br><span class="line">        body: Container(</span><br><span class="line">          child: Column(</span><br><span class="line">            children: &lt;Widget&gt;[</span><br><span class="line">              RaisedButton(</span><br><span class="line">                onPressed: _incrementCounter,</span><br><span class="line">                child: Text(&apos;Increment Counter&apos;)),</span><br><span class="line">              RaisedButton(</span><br><span class="line">                onPressed: _getCounter, </span><br><span class="line">                child: Text(&apos;Get Counter&apos;)</span><br><span class="line">              ),</span><br><span class="line">              RaisedButton(</span><br><span class="line">                onPressed: _removeCounter, </span><br><span class="line">                child: Text(&apos;remove Counter&apos;)</span><br><span class="line">              ),</span><br><span class="line">              Text(</span><br><span class="line">                countString,</span><br><span class="line">                style: TextStyle(fontSize: 20),</span><br><span class="line">              ),</span><br><span class="line">              Text(</span><br><span class="line">                &apos;result：&apos; + localCount,</span><br><span class="line">                style: TextStyle(fontSize: 20),</span><br><span class="line">              ),</span><br><span class="line">            ],</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 注意这里读取数据是异步的，所以 _incrementCounter() 方法要加 async：</span><br><span class="line">  _incrementCounter() async &#123;</span><br><span class="line">    SharedPreferences prefs = await SharedPreferences.getInstance();</span><br><span class="line">    print(&apos;increment counter&apos;);</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      countString = countString + &quot; 1&quot;;</span><br><span class="line">    &#125;);</span><br><span class="line">    // 尝试读取数据。如果不存在，返回0。</span><br><span class="line">    int counter = (prefs.getInt(&apos;counter&apos;) ?? 0) + 1;</span><br><span class="line">    await prefs.setInt(&apos;counter&apos;, counter);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _getCounter() async &#123;</span><br><span class="line">    SharedPreferences prefs = await SharedPreferences.getInstance();</span><br><span class="line">    print(&apos;get counter&apos;);</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      localCount = prefs.getInt(&apos;counter&apos;).toString();</span><br><span class="line">      if (localCount == &quot;null&quot;) &#123;</span><br><span class="line">        localCount = &quot;0&quot;;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _removeCounter() async &#123;</span><br><span class="line">    SharedPreferences prefs = await SharedPreferences.getInstance();</span><br><span class="line">    prefs.remove(&apos;counter&apos;).toString();</span><br><span class="line">    print(&apos;remove counter&apos;);</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      localCount = &quot;0&quot;;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="https://upload-images.jianshu.io/upload_images/1396454-945e82923dad78f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/340" alt></p>
+
       
     </div>
     
@@ -456,7 +463,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://nihao6.top/2019/05/16/跳转界面时组件动画效果/" title="跳转界面时组件动画效果">http://nihao6.top/2019/05/16/跳转界面时组件动画效果/</a>
+    <a href="http://nihao6.top/2019/04/25/使用shared_preferences/" title="Flutter:使用shared_preferences">http://nihao6.top/2019/04/25/使用shared_preferences/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -499,8 +506,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/16/命名路由跳转/" rel="next" title="命名路由跳转">
-                <i class="fa fa-chevron-left"></i> 命名路由跳转
+              <a href="/2018/10/25/Python爬取电影天堂/" rel="next" title="Python爬取电影天堂">
+                <i class="fa fa-chevron-left"></i> Python爬取电影天堂
               </a>
             
           </div>
@@ -509,8 +516,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/18/platformchannel/" rel="prev" title="平台通道platform channel">
-                平台通道platform channel <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/16/页面跳转返回数据/" rel="prev" title="页面跳转返回数据">
+                页面跳转返回数据 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -661,7 +668,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建展示相同图片的两个界面"><span class="nav-number">2.</span> <span class="nav-text">1、创建展示相同图片的两个界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、为首页添加hero组件"><span class="nav-number">3.</span> <span class="nav-text">2、为首页添加hero组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、为第二页添加hero组件"><span class="nav-number">4.</span> <span class="nav-text">3、为第二页添加hero组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">5.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li></ol></div>
             
 
           </div>

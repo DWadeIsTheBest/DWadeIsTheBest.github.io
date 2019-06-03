@@ -45,9 +45,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F05%2F15%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[Flutter:使用shared_preferences]]></title>
+    <url>%2F2019%2F04%2F25%2F%E4%BD%BF%E7%94%A8shared_preferences%2F</url>
+    <content type="text"><![CDATA[Flutter包类似java中的jar包，iOS中的第三方框架，也是由全球众多开发者共同提供第三方库。巧用这些包资源，无须从头造轮子，提升效率。 [包仓库地址]https://pub.dev/ 今天我们使用一个存储库——shared_preferences 来讲解。 介绍shared_preferences仓库地址：https://pub.dev/packages/shared_preferences shared_preferences：包装NSUserDefaults(在iOS上)和SharedPreferences(在Android上)，为简单数据提供一个持久存储。数据异步地保存到磁盘。两个平台都不能保证写操作在返回后被持久化到磁盘上，而且这个插件不能用于存储关键数据。 使用在 pubspec.yaml 里添加： dependencies: shared_preferences: ^0.5.2 然后运行： flutter packages get 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384import &apos;package:flutter/material.dart&apos;;import &apos;package:shared_preferences/shared_preferences.dart&apos;;void main() &#123; runApp(_CounterWidget());&#125;class _CounterWidget extends StatefulWidget &#123; @override _CounterState createState() =&gt; _CounterState();&#125;class _CounterState extends State&lt;_CounterWidget&gt; &#123; String countString = &apos;&apos;; String localCount = &apos;&apos;; @override Widget build(BuildContext context) &#123; return MaterialApp( home: Scaffold( appBar: new AppBar( title: Text(&apos;Flutter存储--shared_preferences&apos;), ), body: Container( child: Column( children: &lt;Widget&gt;[ RaisedButton( onPressed: _incrementCounter, child: Text(&apos;Increment Counter&apos;)), RaisedButton( onPressed: _getCounter, child: Text(&apos;Get Counter&apos;) ), RaisedButton( onPressed: _removeCounter, child: Text(&apos;remove Counter&apos;) ), Text( countString, style: TextStyle(fontSize: 20), ), Text( &apos;result：&apos; + localCount, style: TextStyle(fontSize: 20), ), ], ), ), ), ); &#125; // 注意这里读取数据是异步的，所以 _incrementCounter() 方法要加 async： _incrementCounter() async &#123; SharedPreferences prefs = await SharedPreferences.getInstance(); print(&apos;increment counter&apos;); setState(() &#123; countString = countString + &quot; 1&quot;; &#125;); // 尝试读取数据。如果不存在，返回0。 int counter = (prefs.getInt(&apos;counter&apos;) ?? 0) + 1; await prefs.setInt(&apos;counter&apos;, counter); &#125; _getCounter() async &#123; SharedPreferences prefs = await SharedPreferences.getInstance(); print(&apos;get counter&apos;); setState(() &#123; localCount = prefs.getInt(&apos;counter&apos;).toString(); if (localCount == &quot;null&quot;) &#123; localCount = &quot;0&quot;; &#125; &#125;); &#125; _removeCounter() async &#123; SharedPreferences prefs = await SharedPreferences.getInstance(); prefs.remove(&apos;counter&apos;).toString(); print(&apos;remove counter&apos;); setState(() &#123; localCount = &quot;0&quot;; &#125;); &#125;&#125; 效果如下：]]></content>
+      <categories>
+        <category>Flutter</category>
+      </categories>
+      <tags>
+        <tag>UI</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Python爬取电影天堂]]></title>
