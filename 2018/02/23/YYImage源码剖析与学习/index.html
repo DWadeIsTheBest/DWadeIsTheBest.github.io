@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="框架,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言： 要看懂YYImage框架，最好先了解热身部分(具体的自行百度)，如果懒得看，直接跨过该部分，等到下面部分有疑问，再回过头看这部分的知识，也是可以。  热身部分移动端图片格式调研 1、Image I/OImage I/O 学习笔记Image I/O官方文档GIF图添加文字Demo  使用 CGBitmapContextCreate 函数创建一个位图上下文；使用 CGContextDrawIm">
+<meta name="keywords" content="框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YYImage源码剖析与学习">
+<meta property="og:url" content="http://nihao6.top/2018/02/23/YYImage源码剖析与学习/index.html">
+<meta property="og:site_name" content="Dwyane Blog">
+<meta property="og:description" content="前言： 要看懂YYImage框架，最好先了解热身部分(具体的自行百度)，如果懒得看，直接跨过该部分，等到下面部分有疑问，再回过头看这部分的知识，也是可以。  热身部分移动端图片格式调研 1、Image I/OImage I/O 学习笔记Image I/O官方文档GIF图添加文字Demo  使用 CGBitmapContextCreate 函数创建一个位图上下文；使用 CGContextDrawIm">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1396454-e0e9522b811c48b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-03T14:13:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YYImage源码剖析与学习">
+<meta name="twitter:description" content="前言： 要看懂YYImage框架，最好先了解热身部分(具体的自行百度)，如果懒得看，直接跨过该部分，等到下面部分有疑问，再回过头看这部分的知识，也是可以。  热身部分移动端图片格式调研 1、Image I/OImage I/O 学习笔记Image I/O官方文档GIF图添加文字Demo  使用 CGBitmapContextCreate 函数创建一个位图上下文；使用 CGContextDrawIm">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1396454-e0e9522b811c48b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nihao6.top/2018/02/23/YYImage源码剖析与学习/">
+
+
+
+
+
+  <title>YYImage源码剖析与学习 | Dwyane Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dwyane Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Everything from life</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nihao6.top/2018/02/23/YYImage源码剖析与学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dwyane">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dwyane Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">YYImage源码剖析与学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T14:38:34+08:00">
+                2018-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+                    
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 更新于
+              <time itemprop="dateUpdated" datetime="2019-06-03T22:13:42+08:00" content="2019-06-03">
+                2019-06-03
+              </time>
+            </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.4k个字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><blockquote>
+<p>要看懂YYImage框架，最好先了解热身部分(具体的自行百度)，如果懒得看，直接跨过该部分，等到下面部分有疑问，再回过头看这部分的知识，也是可以。</p>
+</blockquote>
+<h3 id="热身部分"><a href="#热身部分" class="headerlink" title="热身部分"></a>热身部分</h3><p><a href="https://blog.ibireme.com/2015/11/02/mobile_image_benchmark/" target="_blank" rel="noopener">移动端图片格式调研</a></p>
+<h5 id="1、Image-I-O"><a href="#1、Image-I-O" class="headerlink" title="1、Image I/O"></a>1、Image I/O</h5><p><a href="https://www.jianshu.com/p/4dcd6e4bdbf0" target="_blank" rel="noopener">Image I/O 学习笔记</a><br><a href="https://developer.apple.com/documentation/imageio?language=objc" target="_blank" rel="noopener">Image I/O官方文档</a><br><a href="https://github.com/iDwyane/advanced-iOS" target="_blank" rel="noopener">GIF图添加文字Demo</a></p>
+<blockquote>
+<p>使用 <code>CGBitmapContextCreate</code> 函数创建一个位图上下文；<br>使用 <code>CGContextDrawImage</code> 函数将原始位图绘制到上下文中；<br>使用 <code>CGBitmapContextCreateImage</code> 函数创建一张新的解压缩后的位图。</p>
+</blockquote>
+<h5 id="2、-CGBitmapContextCreate-中的参数"><a href="#2、-CGBitmapContextCreate-中的参数" class="headerlink" title="2、 CGBitmapContextCreate 中的参数"></a>2、 <code>CGBitmapContextCreate</code> 中的参数</h5><p><a href="http://blog.leichunfeng.com/blog/2017/02/20/talking-about-the-decompression-of-the-image-in-ios/" target="_blank" rel="noopener">谈谈 iOS 中图片的解压缩</a></p>
+<ul>
+<li><code>data</code> ：如果不为 <code>NULL</code> ，那么它应该指向一块大小至少为 <code>bytesPerRow * height</code> 字节的内存；如果 为 <code>NULL</code> ，那么系统就会为我们自动分配和释放所需的内存，所以一般指定 <code>NULL</code> 即可；</li>
+<li><code>width</code> 和 <code>height</code> ：位图的宽度和高度，分别赋值为图片的像素宽度和像素高度即可；</li>
+<li><code>bitsPerComponent</code> ：像素的每个颜色分量使用的 bit 数，在 RGB 颜色空间下指定 8 即可；</li>
+<li><code>bytesPerRow</code> ：位图的每一行使用的字节数，大小至少为 <code>width * bytes per pixel</code> 字节。有意思的是，当我们指定 0 时，系统不仅会为我们自动计算，而且还会进行 cache line alignment 的优化</li>
+<li><code>space</code> ：<a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_color/dq_color.html#//apple_ref/doc/uid/TP30001066-CH205-TPXREF101" target="_blank" rel="noopener">颜色空间</a>，一般使用 RGB 即可；</li>
+<li><code>bitmapInfo</code> ：位图的布局信息。当图片不包含 alpha 的时候使用 <code>kCGImageAlphaNoneSkipFirst</code> ，否则使用 <code>kCGImageAlphaPremultipliedFirst</code></li>
+</ul>
+<h5 id="3、信号量"><a href="#3、信号量" class="headerlink" title="3、信号量"></a>3、信号量</h5><p><a href="https://www.cnblogs.com/yajunLi/p/6274282.html" target="_blank" rel="noopener">信号量的讲解</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* 注意，正常的使用顺序是先降低然后再提高，这两个函数通常成对使用。 */</span><br><span class="line">    dispatch_semaphore_wait(_framesLock, DISPATCH_TIME_FOREVER); //等待降低信号量</span><br><span class="line">    // to do</span><br><span class="line">    dispatch_semaphore_signal(_framesLock); //提高信号量</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>所用到的知识：<br>复合赋值运算符、Image I/O、CADisplayLink、willChangeValueForKey:、</p>
+</blockquote>
+<h3 id="一、YYImage总体介绍"><a href="#一、YYImage总体介绍" class="headerlink" title="一、YYImage总体介绍"></a>一、YYImage总体介绍</h3><p><img src="https://upload-images.jianshu.io/upload_images/1396454-e0e9522b811c48b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="YImage 结构"><br><a href="https://github.com/ibireme/YYImage" target="_blank" rel="noopener">1、YYImage 源码</a><br><a href="https://github.com/iDwyane/AnalysisForYYImage.git" target="_blank" rel="noopener">2、YYImage 源码的文字解析版本</a></p>
+<h4 id="1、YYImage-功能"><a href="#1、YYImage-功能" class="headerlink" title="1、YYImage 功能"></a>1、YYImage 功能</h4><ul>
+<li>显示动画类型的图片</li>
+<li>播放帧动画</li>
+<li>播放 sprite sheet 动画</li>
+<li>图片类型探测</li>
+<li>图片解码、编码（最核心功能）</li>
+</ul>
+<h4 id="2、YYImage-主要类介绍"><a href="#2、YYImage-主要类介绍" class="headerlink" title="2、YYImage 主要类介绍"></a>2、YYImage 主要类介绍</h4><h5 id="YYImage-类"><a href="#YYImage-类" class="headerlink" title="YYImage 类"></a>YYImage 类</h5><blockquote>
+<p>它是一个完全兼容的“UIImage”子类。它扩展了UIImage<br>支持动画WebP, APNG和GIF格式的图像数据解码。它还<br>支持NSCoding协议，以存档和反存档多帧图像数据。</p>
+</blockquote>
+<p>a、animatedImageMemorySize</p>
+<blockquote>
+<p>如果所有帧图像都被加载到内存中，那么总内存使用(以字节为单位)。<br>如果图像不是从多帧图像数据创建的，则该值为0。</p>
+</blockquote>
+<p>b、preloadAllAnimatedImageFrames</p>
+<blockquote>
+<p>将此属性设置为“YES”将阻塞要解码的调用线程<br>所有动画帧图像到内存，设置为“NO”将释放预装帧。<br>如果图像被许多图像视图(如emoticon)共享，则预加载所有视图<br>帧将降低CPU成本。</p>
+</blockquote>
+<h5 id="YYAnimatedImageView-类"><a href="#YYAnimatedImageView-类" class="headerlink" title="YYAnimatedImageView 类"></a>YYAnimatedImageView 类</h5><blockquote>
+<p>用于显示动画图像的图像视图。<br>可以用来播放多帧动画以及普通动画，可以控制、暂停动画<br>当设备有足够的空闲内存时，这个视图及时请求帧数据。<br>这个视图可以在内部缓冲区中缓存一些或所有未来的帧，以降低CPU成本。</p>
+</blockquote>
+<h3 id="3、YYImage-的意义-图片解码的原因"><a href="#3、YYImage-的意义-图片解码的原因" class="headerlink" title="3、YYImage 的意义(图片解码的原因)"></a>3、YYImage 的意义(图片解码的原因)</h3><p>从磁盘中加载一张图片，并将它显示到屏幕上，这个过程其实经历很多，非常耗性能。随着显示的图片增加，性能下降尤其明显。不管是 JPEG 还是 PNG 等图片，都是一种编码后(压缩)的位图图形格式。我们先看下显示到屏幕这个过程的工作流：</p>
+<blockquote>
+<p>1、我们使用<code>+[UIImage imageWithContentsOfFile:]</code>方法从磁盘中加载一张图片。此时，图片还没有被解码，仍旧是编码状态下。<br>2、返回的图片被分配给<code>UIImageView</code><br>3、接着一个隐式的 <code>CATransaction</code> 捕获到了图层树的变化；<br>4、在主线程的下一个 <code>run loop</code>到来时，<code>Core Animation</code> 提交了这个隐式的事务，可能会涉及copy这些图片（已经成为图层树中的图层内容的图片）。这个 copy 操作可能会涉及以下部分或全部步骤：</p>
+<blockquote>
+<p> a.分配缓冲区来管理文件IO和解压缩操作。<br> b.文件数据从磁盘读取到内存。<br> c.将压缩的图片数据解码成未压缩的位图形式，这是一个非常耗时的 CPU 操作；<br>d.最后 <code>Core Animation</code> 使用未压缩的位图数据渲染 <code>UIImageView</code> 的图层</p>
+</blockquote>
+</blockquote>
+<p><strong>图层树：</strong>（个人理解）洋葱看过去有很多层，这就是洋葱的图层，而屏幕上显示的文字、图片啊，都可以理解成为图层，很多图层就形成了一个结构，这个很多图层的结构就叫做图层树。</p>
+<blockquote>
+<p>因此，在将磁盘中的图片渲染到屏幕之前，必须先要得到图片的原始像素数据，才能执行后续的绘制操作，这就是为什么需要对图片解码的原因。</p>
+</blockquote>
+<h3 id="二、YYImage主要类调用逻辑"><a href="#二、YYImage主要类调用逻辑" class="headerlink" title="二、YYImage主要类调用逻辑"></a>二、YYImage主要类调用逻辑</h3><h4 id="A、渲染GIF-WebP-PNG-APNG-方法调用顺序"><a href="#A、渲染GIF-WebP-PNG-APNG-方法调用顺序" class="headerlink" title="A、渲染GIF/WebP/PNG(APNG)方法调用顺序"></a>A、渲染GIF/WebP/PNG(APNG)方法调用顺序</h4><p>1、<code>YYImage *image = [YYImage imageNamed:name];</code> //传入图片名创建YYImage对象</p>
+<p>2、<code>[[self alloc] initWithData:data scale:scale];</code>//用重写的方法初始化图像数据</p>
+<p>3、<code>YYImageDecoder *decoder = [YYImageDecoder decoderWithData:data scale:scale];</code>//创建解码类 YYImageDecoder 对象，紧接着更新数据</p>
+<p>4、<code>result = [self _updateData:data final:final];</code>//根据图像的data算出图片的type以及其他信息，再根据不同type 的图像去分别更新数据</p>
+<p>5、<code>[self _updateSourceImageIO];</code>// 计算出PNG、GIF等图片信息（图片的每一帧的属性，包括宽、高、方向、动画重复次数（gif类型）、持续时间（gif类型））</p>
+<p>6、 <code>YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithImage:image];</code> //把图片添加到 UIImageView 的子类，这个子类后面讲（第7点后都是它的核心），这里暂且当它为普通 ImageView 那样看。</p>
+<p>7、<code>[self setImage:image withType:YYAnimatedImageTypeImage];</code>// 设置图片，类似Setter方法</p>
+<p>8、<code>[self imageChanged];</code>//判断当前图片类型以及帧数，由<a href="https://www.jianshu.com/p/c8ffa7ab50d1" target="_blank" rel="noopener">CATransaction</a>支持的显示事务去更新图层的 <code>contentsRect</code>，以及重置动画的参数，后面详解该方法。</p>
+<p>9、<code>[self resetAnimated];</code>//重置动画多种参数；<code>[self calcMaxBufferCount];</code> // 动态调整当前内存的缓冲区大小。</p>
+<p>10、<code>[self didMoved];</code>// 窗口对象或者父视图对象改变，则开始控制动画的启动（停止），这是动画得以显示的关键</p>
+<h4 id="B、渲染帧动画方法调用顺序"><a href="#B、渲染帧动画方法调用顺序" class="headerlink" title="B、渲染帧动画方法调用顺序"></a>B、渲染帧动画方法调用顺序</h4><p>1、<code>UIImage *image = [[YYFrameImage alloc] initWithImagePaths:paths oneFrameDuration:0.1 loopCount:0];</code> //传入图片组的路径、每一个帧（每一个图片）的时间以及循环多少次，计算出总的durations<br>2、<code>[self initWithImagePaths:paths frameDurations:durations loopCount:loopCount];</code>// 把第一张图片解码后返回，并求出第一帧的大小，作为每一帧的大小<br>3、<code>YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithImage:image];</code><br>后面步骤跟 <strong>渲染GIF/WebP/PNG(APNG)方法调用顺序</strong> 第7点开始几乎一样</p>
+<p><strong>注意：由于代码过多，不可能面面俱到，所以下面只会摘取核心进行讲解。这样，读者看完此文以及看完我标注过的源码()，，去读源代码，也更容易理解。</strong></p>
+<h3 id="三、核心代码"><a href="#三、核心代码" class="headerlink" title="三、核心代码"></a>三、核心代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// 它接受一个原始的位图参数 imageRef ，最终返回一个新的解压缩后的位图 newImage</span><br><span class="line">CGImageRef YYCGImageCreateDecodedCopy(CGImageRef imageRef, BOOL decodeForDisplay) &#123;</span><br><span class="line">    if (!imageRef) return NULL;</span><br><span class="line">    size_t width = CGImageGetWidth(imageRef);</span><br><span class="line">    size_t height = CGImageGetHeight(imageRef);</span><br><span class="line">    if (width == 0 || height == 0) return NULL;</span><br><span class="line">    </span><br><span class="line">    // 重新绘制解码(可能会失去一些精度)</span><br><span class="line">    if (decodeForDisplay) &#123; //decode with redraw (may lose some precision)</span><br><span class="line">        CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef) &amp; kCGBitmapAlphaInfoMask;</span><br><span class="line">        BOOL hasAlpha = NO;</span><br><span class="line">        if (alphaInfo == kCGImageAlphaPremultipliedLast ||</span><br><span class="line">            alphaInfo == kCGImageAlphaPremultipliedFirst ||</span><br><span class="line">            alphaInfo == kCGImageAlphaLast ||</span><br><span class="line">            alphaInfo == kCGImageAlphaFirst) &#123;</span><br><span class="line">            hasAlpha = YES;</span><br><span class="line">        &#125;</span><br><span class="line">        // BGRA8888 (premultiplied) or BGRX8888</span><br><span class="line">        // same as UIGraphicsBeginImageContext() and -[UIView drawRect:]</span><br><span class="line">        CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Host;</span><br><span class="line">        bitmapInfo |= hasAlpha ? kCGImageAlphaPremultipliedFirst : kCGImageAlphaNoneSkipFirst;</span><br><span class="line">        CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, 0, YYCGColorSpaceGetDeviceRGB(), bitmapInfo);</span><br><span class="line">        if (!context) return NULL;</span><br><span class="line">        CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef); // decode</span><br><span class="line">        CGImageRef newImage = CGBitmapContextCreateImage(context);</span><br><span class="line">        CFRelease(context);</span><br><span class="line">        return newImage; // 返回一个新的解压缩后的位图 newImage</span><br><span class="line">        </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>YYCGImageCreateDecodedCopy</code> 是解压缩的核心，也就是渲染图片性能显著的原因。该方法首先求出图片的宽高，注意，这里的图片是指编码前的图片的每一帧图片。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">- (void)imageChanged &#123;</span><br><span class="line">    YYAnimatedImageType newType = [self currentImageType];</span><br><span class="line">    id newVisibleImage = [self imageForType:newType];</span><br><span class="line">    NSUInteger newImageFrameCount = 0;</span><br><span class="line">    BOOL hasContentsRect = NO;</span><br><span class="line">    if ([newVisibleImage isKindOfClass:[UIImage class]] &amp;&amp;</span><br><span class="line">        [newVisibleImage conformsToProtocol:@protocol(YYAnimatedImage)]) &#123;</span><br><span class="line">        // 求出有多少帧（如果是帧动画(由多张图组合的)，相当于有多少张图）</span><br><span class="line">        newImageFrameCount = ((UIImage&lt;YYAnimatedImage&gt; *) newVisibleImage).animatedImageFrameCount;</span><br><span class="line">        if (newImageFrameCount &gt; 1) &#123; // 动态图</span><br><span class="line">            hasContentsRect = [((UIImage&lt;YYAnimatedImage&gt; *) newVisibleImage) respondsToSelector:@selector(animatedImageContentsRectAtIndex:)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // 由CATransaction支持的显示事务去更新图层的 contentsRect, 但一般不用走这段代码。大都走的是 CATransaction 的隐式事务自己更新</span><br><span class="line">    if (!hasContentsRect &amp;&amp; _curImageHasContentsRect) &#123;</span><br><span class="line">        if (!CGRectEqualToRect(self.layer.contentsRect, CGRectMake(0, 0, 1, 1)) ) &#123;</span><br><span class="line">            [CATransaction begin];</span><br><span class="line">            [CATransaction setDisableActions:YES];</span><br><span class="line">            self.layer.contentsRect = CGRectMake(0, 0, 1, 1);</span><br><span class="line">            [CATransaction commit];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _curImageHasContentsRect = hasContentsRect;</span><br><span class="line"></span><br><span class="line">    // YYSpriteSheetImage 类用到，先不理</span><br><span class="line">    if (hasContentsRect) &#123;</span><br><span class="line">        CGRect rect = [((UIImage&lt;YYAnimatedImage&gt; *) newVisibleImage) animatedImageContentsRectAtIndex:0];</span><br><span class="line">        [self setContentsRect:rect forImage:newVisibleImage];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (newImageFrameCount &gt; 1) &#123;</span><br><span class="line">        [self resetAnimated]; // 重置动画多种参数，包括在后台释放图像，下面再赋值已经被重置过的动画参数</span><br><span class="line">        _curAnimatedImage = newVisibleImage; // 当前动画图片</span><br><span class="line">        _curFrame = newVisibleImage; // 当前帧</span><br><span class="line">        _totalLoop = _curAnimatedImage.animatedImageLoopCount; // 总循环次数</span><br><span class="line">        _totalFrameCount = _curAnimatedImage.animatedImageFrameCount; // 总帧数</span><br><span class="line">        [self calcMaxBufferCount]; // 动态调整当前内存的缓冲区大小。</span><br><span class="line">    &#125;</span><br><span class="line">    [self setNeedsDisplay]; // 标志需要重绘，会在下一个循环到来时刷新</span><br><span class="line">    [self didMoved]; // 窗口对象或者父视图对象改变，则开始控制动画的启动（停止），这是动画得以显示的关键</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>图片改变的处理核心</strong></p>
+<blockquote>
+<p>主要做了以下几点：</p>
+<ul>
+<li>初始化动画参数  <code>resetAniamted</code></li>
+<li>初始化或者重置后求出动画播放循环次数、当前帧、总帧数</li>
+<li>调用动态调整缓冲区方法 <code>calcMaxBufferCount</code> 、调用控制动画方法 <code>didMoved</code></li>
+</ul>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">// init the animated params.</span><br><span class="line">- (void)resetAnimated &#123;</span><br><span class="line">    if (!_link) &#123;</span><br><span class="line">        _lock = dispatch_semaphore_create(1);</span><br><span class="line">        _buffer = [NSMutableDictionary new];</span><br><span class="line">        </span><br><span class="line">        // 添加到这种队列中的操作，就会自动放到子线程中执行。</span><br><span class="line">        _requestQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">        /* maxConcurrentOperationCount 默认情况下为-1，表示不进行限制，可进行并发执行。</span><br><span class="line">        为1时，队列为串行队列。只能串行执行。大于1时，队列为并发队列 */</span><br><span class="line">        _requestQueue.maxConcurrentOperationCount = 1;</span><br><span class="line">        /* 初始化一个新的 CADisplayLink 对象，在屏幕更新时调用。为了使显示循环与显示同步，应用程序使用addToRunLoop:forMode:方法将其添加到运行循环中</span><br><span class="line">            一个计时器对象，允许应用程序将其绘图同步到显示的刷新率。</span><br><span class="line">         */</span><br><span class="line">        _link = [CADisplayLink displayLinkWithTarget:[_YYImageWeakProxy proxyWithTarget:self] selector:@selector(step:)];</span><br><span class="line">        if (_runloopMode) &#123;</span><br><span class="line">            [_link addToRunLoop:[NSRunLoop mainRunLoop] forMode:_runloopMode];</span><br><span class="line">        &#125;</span><br><span class="line">        // 禁用通知</span><br><span class="line">        _link.paused = YES;</span><br><span class="line">        </span><br><span class="line">        // 接受内存警告的通知</span><br><span class="line">        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];</span><br><span class="line">        // 接受返回后台的通知，返回后台时，记录即将显示的下一帧</span><br><span class="line">        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    [_requestQueue cancelAllOperations];</span><br><span class="line">    </span><br><span class="line">    LOCK(</span><br><span class="line">         if (_buffer.count) &#123;</span><br><span class="line">             NSMutableDictionary *holder = _buffer;</span><br><span class="line">             _buffer = [NSMutableDictionary new];</span><br><span class="line">             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^&#123;</span><br><span class="line">                 // Capture the dictionary to global queue,</span><br><span class="line">                 // release these images in background to avoid blocking UI thread.</span><br><span class="line">                 [holder class];  // 捕获字典到全局队列，在后台释放这些图像以避免阻塞UI线程。</span><br><span class="line">                 </span><br><span class="line">             &#125;);</span><br><span class="line">         &#125;</span><br><span class="line">    );</span><br><span class="line">    _link.paused = YES;</span><br><span class="line">    _time = 0;</span><br><span class="line">    if (_curIndex != 0) &#123;</span><br><span class="line">        [self willChangeValueForKey:@&quot;currentAnimatedImageIndex&quot;];</span><br><span class="line">        _curIndex = 0; // 把索引值重置为0</span><br><span class="line">        [self didChangeValueForKey:@&quot;currentAnimatedImageIndex&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    _curAnimatedImage = nil; // 当前图像为空</span><br><span class="line">    _curFrame = nil; // 当前帧</span><br><span class="line">    _curLoop = 0; //当前循环次数</span><br><span class="line">    _totalLoop = 0; // 总循环次数</span><br><span class="line">    _totalFrameCount = 1; // 总帧数</span><br><span class="line">    _loopEnd = NO; // 是否循环结尾</span><br><span class="line">    _bufferMiss = NO; // 是否丢帧</span><br><span class="line">    _incrBufferCount = 0; // 当前允许的缓存</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>重置图片的参数；<br>内存警告时释放内存；<br>初始化一个新的 CADisplayLink 对象，在屏幕更新时调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">// 只有屏幕刷新累加时间不小于当前帧的动画播放时间才显示图片，播放下一帧。</span><br><span class="line">// 播放 GIF 的关键</span><br><span class="line">- (void)step:(CADisplayLink *)link &#123;</span><br><span class="line">    UIImage &lt;YYAnimatedImage&gt; *image = _curAnimatedImage;</span><br><span class="line">    NSMutableDictionary *buffer = _buffer;</span><br><span class="line">    // 下一张的图片</span><br><span class="line">    UIImage *bufferedImage = nil;</span><br><span class="line">    // 下一张要显示的索引</span><br><span class="line">    NSUInteger nextIndex = (_curIndex + 1) % _totalFrameCount;</span><br><span class="line">    BOOL bufferIsFull = NO;</span><br><span class="line">    </span><br><span class="line">    // // 当前无图像显示 返回</span><br><span class="line">    if (!image) return;</span><br><span class="line">    if (_loopEnd) &#123; // view will keep in last frame // 结束循环 停留在最后帧</span><br><span class="line">        [self stopAnimating]; // 如果动画播放循环结束了，就停止动画</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSTimeInterval delay = 0;</span><br><span class="line">    if (!_bufferMiss) &#123;</span><br><span class="line">        // 屏幕刷新时间的累加</span><br><span class="line">        _time += link.duration; // link.duration 屏幕刷新的时间，默认1/60 s</span><br><span class="line">        delay = [image animatedImageDurationAtIndex:_curIndex]; // 返回当前帧的持续时间</span><br><span class="line">        if (_time &lt; delay) return;</span><br><span class="line">        _time -= delay; // 减去上一帧播放的时间</span><br><span class="line">        if (nextIndex == 0) &#123;</span><br><span class="line">            _curLoop++; // 增加一轮循环次数</span><br><span class="line">            if (_curLoop &gt;= _totalLoop &amp;&amp; _totalLoop != 0) &#123; // 已经到了循环次数，停止播放</span><br><span class="line">                _loopEnd = YES;</span><br><span class="line">                [self stopAnimating];</span><br><span class="line">                [self.layer setNeedsDisplay]; // let system call `displayLayer:` before runloop sleep</span><br><span class="line">                return; // stop at last frame</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        delay = [image animatedImageDurationAtIndex:nextIndex]; // 返回下一帧的的持续时间</span><br><span class="line">        </span><br><span class="line">        /**  */</span><br><span class="line">        if (_time &gt; delay) _time = delay; // do not jump over frame</span><br><span class="line">    &#125;</span><br><span class="line">    LOCK(</span><br><span class="line">         bufferedImage = buffer[@(nextIndex)];</span><br><span class="line">         if (bufferedImage) &#123;</span><br><span class="line">             if ((int)_incrBufferCount &lt; _totalFrameCount) &#123;</span><br><span class="line">                 [buffer removeObjectForKey:@(nextIndex)];</span><br><span class="line">             &#125;</span><br><span class="line">             [self willChangeValueForKey:@&quot;currentAnimatedImageIndex&quot;];</span><br><span class="line">             _curIndex = nextIndex; // 用KVO改变 当前索引值</span><br><span class="line">             [self didChangeValueForKey:@&quot;currentAnimatedImageIndex&quot;];</span><br><span class="line">             _curFrame = bufferedImage == (id)[NSNull null] ? nil : bufferedImage;</span><br><span class="line">             </span><br><span class="line">             // 实现YYSpriteSheetImage 的协议方法，才会进入该 if 语句</span><br><span class="line">             if (_curImageHasContentsRect) &#123;</span><br><span class="line">                 _curContentsRect = [image animatedImageContentsRectAtIndex:_curIndex];</span><br><span class="line">                 [self setContentsRect:_curContentsRect forImage:_curFrame];</span><br><span class="line">             &#125;</span><br><span class="line">             nextIndex = (_curIndex + 1) % _totalFrameCount;</span><br><span class="line">             _bufferMiss = NO;</span><br><span class="line">             if (buffer.count == _totalFrameCount) &#123;</span><br><span class="line">                 bufferIsFull = YES; // 缓冲区已经满</span><br><span class="line">             &#125;</span><br><span class="line">         &#125; else &#123;</span><br><span class="line">             // 丢帧，某一帧没有办法找到显示</span><br><span class="line">             _bufferMiss = YES;</span><br><span class="line">         &#125;</span><br><span class="line">    )//LOCK</span><br><span class="line">    </span><br><span class="line">    if (!_bufferMiss) &#123;</span><br><span class="line">        // 刷新显示图像</span><br><span class="line">        [self.layer setNeedsDisplay]; // let system call `displayLayer:` before runloop sleep</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /* _YYAnimatedImageViewFetchOperation 为 NSOperation 的子类</span><br><span class="line">        还未获取完所有图像，交给它获取下一张图像 */</span><br><span class="line">    if (!bufferIsFull &amp;&amp; _requestQueue.operationCount == 0) &#123; // if some work not finished, wait for next opportunity</span><br><span class="line">        _YYAnimatedImageViewFetchOperation *operation = [_YYAnimatedImageViewFetchOperation new];</span><br><span class="line">        operation.view = self;</span><br><span class="line">        operation.nextIndex = nextIndex;</span><br><span class="line">        operation.curImage = image;</span><br><span class="line">        [_requestQueue addOperation:operation]; //</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>这是动画播放的关键，是 CADisplayLink对象 的方法，每 1/60s 也就是屏幕刷新一次就调用一次</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (void)calcMaxBufferCount &#123;</span><br><span class="line">    int64_t bytes = (int64_t)_curAnimatedImage.animatedImageBytesPerFrame; // 求出每一帧的字节数</span><br><span class="line">    if (bytes == 0) bytes = 1024; // 如果为0，则给定1024</span><br><span class="line">    </span><br><span class="line">    int64_t total = _YYDeviceMemoryTotal(); // 获取设备的CPU物理内存</span><br><span class="line">    int64_t free = _YYDeviceMemoryFree(); // 获取设备的容量</span><br><span class="line">    int64_t max = MIN(total * 0.2, free * 0.6); // 比较内存的0.2倍以及容量的0.6倍最小值</span><br><span class="line">    max = MAX(max, BUFFER_SIZE); // 如果不够 10 M,则以 10 M 作为最大缓冲区大小</span><br><span class="line">    </span><br><span class="line">    /** _maxBufferSize 内部帧缓冲区大小</span><br><span class="line">     * 当设备有足够的空闲内存时，这个视图将请求并解码一些或所有未来的帧图像进入一个内部缓冲区。</span><br><span class="line">     * 默认值为0 如果这个属性的值是0，那么最大缓冲区大小将根据当前的状态进行动态调整设备释放内存。否则，缓冲区大小将受到此值的限制。</span><br><span class="line">     * 当收到内存警告或应用程序进入后台时，缓冲区将被立即释放</span><br><span class="line">     */</span><br><span class="line">    if (_maxBufferSize) max = max &gt; _maxBufferSize ? _maxBufferSize : max; //得出缓冲区的最大值</span><br><span class="line">    </span><br><span class="line">    double maxBufferCount = (double)max / (double)bytes;</span><br><span class="line">    if (maxBufferCount &lt; 1) maxBufferCount = 1;</span><br><span class="line">    else if (maxBufferCount &gt; 512) maxBufferCount = 512;</span><br><span class="line">    _maxBufferCount = maxBufferCount; // 最大缓冲数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>动态求出最大缓冲数—&gt;<a href="https://www.jianshu.com/p/74ee9ed5546c" target="_blank" rel="noopener">参考</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/* 从自定义的 start 方法中调用 main 方法</span><br><span class="line"> 调用[self didMoved]; 从而调用此方法</span><br><span class="line">*/</span><br><span class="line">- (void)main &#123;</span><br><span class="line">    __strong YYAnimatedImageView *view = _view;</span><br><span class="line">    if (!view) return;</span><br><span class="line">    if ([self isCancelled]) return;</span><br><span class="line">    view-&gt;_incrBufferCount++;</span><br><span class="line">    </span><br><span class="line">    //动态调整当前内存的缓冲区大小。</span><br><span class="line">    if (view-&gt;_incrBufferCount == 0) [view calcMaxBufferCount];</span><br><span class="line">    </span><br><span class="line">    if (view-&gt;_incrBufferCount &gt; (NSInteger)view-&gt;_maxBufferCount) &#123;</span><br><span class="line">        view-&gt;_incrBufferCount = view-&gt;_maxBufferCount;</span><br><span class="line">    &#125;</span><br><span class="line">    NSUInteger idx = _nextIndex; // 获取 Operation 中传过来的 下一个索引值</span><br><span class="line">    NSUInteger max = view-&gt;_incrBufferCount &lt; 1 ? 1 : view-&gt;_incrBufferCount; // 当前的缓冲区计数</span><br><span class="line">    NSUInteger total = view-&gt;_totalFrameCount; // 总图片帧数</span><br><span class="line">    view = nil;</span><br><span class="line">    </span><br><span class="line">    for (int i = 0; i &lt; max; i++, idx++) &#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            if (idx &gt;= total) idx = 0;</span><br><span class="line">            if ([self isCancelled]) break;</span><br><span class="line">            __strong YYAnimatedImageView *view = _view;</span><br><span class="line">            if (!view) break;</span><br><span class="line">            LOCK_VIEW(BOOL miss = (view-&gt;_buffer[@(idx)] == nil)); //  拿索引值去当前缓冲区取图片</span><br><span class="line">            </span><br><span class="line">            // 如果没有取到图片，则在子线程重新解码，得到解码后的图片</span><br><span class="line">            if (miss) &#123;</span><br><span class="line">                // 等到当前还未解码的图片</span><br><span class="line">                UIImage *img = [_curImage animatedImageFrameAtIndex:idx];</span><br><span class="line">                NSLog(@&quot;当前线程---%@&quot;, [NSThread currentThread]); // 打印当前线程，每次打印都是 name = (null)，说明在异步线程</span><br><span class="line">                // 在异步线程再次调用解码图片，如果无法解码或已经解码就返回self</span><br><span class="line">                img = img.yy_imageByDecoded;</span><br><span class="line">                if ([self isCancelled]) break;</span><br><span class="line">                LOCK_VIEW(view-&gt;_buffer[@(idx)] = img ? img : [NSNull null]); // 每次添加一张图片到 _buffer 数组</span><br><span class="line">                view = nil;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>该方法负责把图片存入缓冲区中。（过程：取未解码图片–&gt;解码存入缓冲区）</p>
+</blockquote>
+<p>在此，对YYImage框架完毕了，希望大家都能从大神源码学到知识。</p>
+<hr>
+<hr>
+<hr>
+<h3 id="其他额外收获："><a href="#其他额外收获：" class="headerlink" title="其他额外收获："></a>其他额外收获：</h3><p>1、是否模拟器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isSimulator &#123;</span><br><span class="line">    size_t size;</span><br><span class="line">    sysctlbyname(&quot;hw.machine&quot;, NULL, &amp;size, NULL, 0);</span><br><span class="line">    char *machine = malloc(size);</span><br><span class="line">    sysctlbyname(&quot;hw.machine&quot;, machine, &amp;size, NULL, 0);</span><br><span class="line">    NSString *model = [NSString stringWithUTF8String:machine];</span><br><span class="line">    free(machine);</span><br><span class="line">    return [model isEqualToString:@&quot;x86_64&quot;] || [model isEqualToString:@&quot;i386&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2、根据不同的系统 scale 选择图片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/** 一个NSNumber对象数组，根据不同的系统scale返回数组内部不同顺序的数字</span><br><span class="line">e.g. iPhone3GS:@[@1,@2,@3] iPhone5:@[@2,@3,@1]  iPhone6 Plus:@[@3,@2,@1]</span><br><span class="line">*/</span><br><span class="line">static NSArray *_NSBundlePreferredScales() &#123;</span><br><span class="line">    static NSArray *scales;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        CGFloat screenScale = [UIScreen mainScreen].scale;</span><br><span class="line">        if (screenScale &lt;= 1) &#123;</span><br><span class="line">            scales = @[@1,@2,@3];</span><br><span class="line">        &#125; else if (screenScale &lt;= 2) &#123;</span><br><span class="line">            scales = @[@2,@3,@1];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            scales = @[@3,@2,@1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    return scales;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>咋一看，这不是单例吗？保证初始化代码只执行一次，可移步<a href="https://www.jianshu.com/p/33b0a8014e80" target="_blank" rel="noopener">单例相关文章</a></p>
+</blockquote>
+<p>3、判断图片后缀<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NSArray *exts = ext.length &gt; 0 ? @[ext] : @[@&quot;&quot;, @&quot;png&quot;, @&quot;jpeg&quot;, @&quot;jpg&quot;, @&quot;gif&quot;, @&quot;webp&quot;, @&quot;apng&quot;];</span><br><span class="line">NSArray *scales = _NSBundlePreferredScales();</span><br><span class="line">for (int s = 0; s &lt; scales.count; s++) &#123;</span><br><span class="line">    scale = ((NSNumber *)scales[s]).floatValue;</span><br><span class="line">    NSString *scaledName = _NSStringByAppendingNameScale(res, scale);</span><br><span class="line">    for (NSString *e in exts) &#123;</span><br><span class="line">        path = [[NSBundle mainBundle] pathForResource:scaledName ofType:e];</span><br><span class="line">        if (path) break;</span><br><span class="line">    &#125;</span><br><span class="line">    if (path) break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果图片没标明后缀，则遍历后缀数组，并添加后缀到传进来的图片名，最后到 <code>mainBundle</code> 里面取图片路径，取到地址则停止</p>
+</blockquote>
+<p> <code>CF_RETURNS_RETAINED</code> 标记返回CF类型的函数，该类型需要调用方释放<br><code>NSDefaultRunLoopMode</code> 保持gif 图在scrollView 拉动时不停止<br><strong>|=</strong> 为按位或运算符   eg: <code>a|=b;</code> 相当于 <code>a=a|b;</code></p>
+<p>参考：<br><a href="https://www.uisdc.com/introduction-of-apng-gif" target="_blank" rel="noopener">快速解决GIF图的锯齿问题</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://raw.githubusercontent.com/iDwyane/Dwyane.github.io/master/images/wechat-qcode.jpg" alt="Dwyane wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Dwyane
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://nihao6.top/2018/02/23/YYImage源码剖析与学习/" title="YYImage源码剖析与学习">http://nihao6.top/2018/02/23/YYImage源码剖析与学习/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/框架/" rel="tag"># 框架</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/14/MJRefresh源码剖析与学习/" rel="next" title="MJRefresh源码剖析与学习">
+                <i class="fa fa-chevron-left"></i> MJRefresh源码剖析与学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/25/Python爬取电影天堂/" rel="prev" title="Python爬取电影天堂">
+                Python爬取电影天堂 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Dwyane">
+            
+              <p class="site-author-name" itemprop="name">Dwyane</p>
+              <p class="site-description motion-element" itemprop="description">Despite knowing the journey and where it leads, I embrace it and welcome every moment.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iDwyane" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/bb2db3428fff" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#热身部分"><span class="nav-number">2.</span> <span class="nav-text">热身部分</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、Image-I-O"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、Image I/O</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、-CGBitmapContextCreate-中的参数"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、 CGBitmapContextCreate 中的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、信号量"><span class="nav-number">2.0.3.</span> <span class="nav-text">3、信号量</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#一、YYImage总体介绍"><span class="nav-number">3.</span> <span class="nav-text">一、YYImage总体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、YYImage-功能"><span class="nav-number">3.1.</span> <span class="nav-text">1、YYImage 功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、YYImage-主要类介绍"><span class="nav-number">3.2.</span> <span class="nav-text">2、YYImage 主要类介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#YYImage-类"><span class="nav-number">3.2.1.</span> <span class="nav-text">YYImage 类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#YYAnimatedImageView-类"><span class="nav-number">3.2.2.</span> <span class="nav-text">YYAnimatedImageView 类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、YYImage-的意义-图片解码的原因"><span class="nav-number">4.</span> <span class="nav-text">3、YYImage 的意义(图片解码的原因)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、YYImage主要类调用逻辑"><span class="nav-number">5.</span> <span class="nav-text">二、YYImage主要类调用逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A、渲染GIF-WebP-PNG-APNG-方法调用顺序"><span class="nav-number">5.1.</span> <span class="nav-text">A、渲染GIF/WebP/PNG(APNG)方法调用顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B、渲染帧动画方法调用顺序"><span class="nav-number">5.2.</span> <span class="nav-text">B、渲染帧动画方法调用顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、核心代码"><span class="nav-number">6.</span> <span class="nav-text">三、核心代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他额外收获："><span class="nav-number">7.</span> <span class="nav-text">其他额外收获：</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"  (｡♥‿♥｡)>Dwyane</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">15.3k</span>
+  
+</div>
+
+
+<div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

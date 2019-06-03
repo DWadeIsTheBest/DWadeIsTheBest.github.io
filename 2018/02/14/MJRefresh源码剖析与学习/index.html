@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="框架,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MJRefresh是李明杰大神的开源框架,这是一款十分优雅的刷新组件库，这开源组件无论从代码风格，可用性，易读性还是兼容性来讲都十分优秀。本文就最新MJRefresh版本来讲解。耐心看下去，本文和纯解读源码的文章不同。本文码字几天，如果对您有帮助，给个鼓励，谢谢大家！ MJRefresh 一、MJRefreshComponent1.导入文件123456#import &amp;lt;UIKit/UIKit">
+<meta name="keywords" content="框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MJRefresh源码剖析与学习">
+<meta property="og:url" content="http://nihao6.top/2018/02/14/MJRefresh源码剖析与学习/index.html">
+<meta property="og:site_name" content="Dwyane Blog">
+<meta property="og:description" content="MJRefresh是李明杰大神的开源框架,这是一款十分优雅的刷新组件库，这开源组件无论从代码风格，可用性，易读性还是兼容性来讲都十分优秀。本文就最新MJRefresh版本来讲解。耐心看下去，本文和纯解读源码的文章不同。本文码字几天，如果对您有帮助，给个鼓励，谢谢大家！ MJRefresh 一、MJRefreshComponent1.导入文件123456#import &amp;lt;UIKit/UIKit">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-df0f1cc20d14c7df?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-8e77426fa2abdf80?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-b8227fd41003dcf4?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-9854a686dd292158?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-71c724779019fa3e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-03T14:11:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MJRefresh源码剖析与学习">
+<meta name="twitter:description" content="MJRefresh是李明杰大神的开源框架,这是一款十分优雅的刷新组件库，这开源组件无论从代码风格，可用性，易读性还是兼容性来讲都十分优秀。本文就最新MJRefresh版本来讲解。耐心看下去，本文和纯解读源码的文章不同。本文码字几天，如果对您有帮助，给个鼓励，谢谢大家！ MJRefresh 一、MJRefreshComponent1.导入文件123456#import &amp;lt;UIKit/UIKit">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1396454-df0f1cc20d14c7df?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nihao6.top/2018/02/14/MJRefresh源码剖析与学习/">
+
+
+
+
+
+  <title>MJRefresh源码剖析与学习 | Dwyane Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dwyane Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Everything from life</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nihao6.top/2018/02/14/MJRefresh源码剖析与学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dwyane">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dwyane Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MJRefresh源码剖析与学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T10:32:34+08:00">
+                2018-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+                    
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 更新于
+              <time itemprop="dateUpdated" datetime="2019-06-03T22:11:17+08:00" content="2019-06-03">
+                2019-06-03
+              </time>
+            </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.1k个字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  23分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>MJRefresh</code>是李明杰大神的开源框架,这是一款十分优雅的刷新组件库，这开源组件无论从代码风格，可用性，易读性还是兼容性来讲都十分优秀。本文就最新<code>MJRefresh</code>版本来讲解。耐心看下去，本文和纯解读源码的文章不同。本文码字几天，如果对您有帮助，给个鼓励，谢谢大家！</p>
+<h3 id="MJRefresh"><a href="#MJRefresh" class="headerlink" title="MJRefresh"></a>MJRefresh</h3><p><img src="http://upload-images.jianshu.io/upload_images/1396454-df0f1cc20d14c7df?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="基本结构"></p>
+<h4 id="一、MJRefreshComponent"><a href="#一、MJRefreshComponent" class="headerlink" title="一、MJRefreshComponent"></a>一、MJRefreshComponent</h4><h5 id="1-导入文件"><a href="#1-导入文件" class="headerlink" title="1.导入文件"></a>1.导入文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line">#import &quot;MJRefreshConst.h&quot;</span><br><span class="line">#import &quot;UIView+MJExtension.h&quot;</span><br><span class="line">#import &quot;UIScrollView+MJExtension.h&quot;</span><br><span class="line">#import &quot;UIScrollView+MJRefresh.h&quot;</span><br><span class="line">#import &quot;NSBundle+MJRefresh.h&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1396454-8e77426fa2abdf80?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="导入文件功能"></p>
+<h5 id="2-状态枚举"><a href="#2-状态枚举" class="headerlink" title="2.状态枚举"></a>2.状态枚举</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/** 刷新控件的状态 */</span><br><span class="line">typedef NS_ENUM(NSInteger, MJRefreshState) &#123;</span><br><span class="line">    /** 普通闲置状态 */</span><br><span class="line">    MJRefreshStateIdle = 1,</span><br><span class="line">    /** 松开就可以进行刷新的状态 */</span><br><span class="line">    MJRefreshStatePulling,</span><br><span class="line">    /** 正在刷新中的状态 */</span><br><span class="line">    MJRefreshStateRefreshing,</span><br><span class="line">    /** 即将刷新的状态 */</span><br><span class="line">    MJRefreshStateWillRefresh,</span><br><span class="line">    /** 所有数据加载完毕，没有更多的数据了 */</span><br><span class="line">    MJRefreshStateNoMoreData</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="3、刷新回调"><a href="#3、刷新回调" class="headerlink" title="3、刷新回调"></a>3、刷新回调</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 刷新回调</span><br><span class="line">/** 正在刷新的回调 */</span><br><span class="line">@property (copy, nonatomic) MJRefreshComponentRefreshingBlock refreshingBlock;</span><br><span class="line">/** 设置回调对象和回调方法 */</span><br><span class="line">- (void)setRefreshingTarget:(id)target refreshingAction:(SEL)action;</span><br><span class="line"></span><br><span class="line">/** 回调对象 */</span><br><span class="line">@property (weak, nonatomic) id refreshingTarget;</span><br><span class="line">/** 回调方法 */</span><br><span class="line">@property (assign, nonatomic) SEL refreshingAction;</span><br><span class="line">/** 触发回调（交给子类去调用） */</span><br><span class="line">- (void)executeRefreshingCallback;</span><br></pre></td></tr></table></figure>
+<h5 id="4、刷新状态控制"><a href="#4、刷新状态控制" class="headerlink" title="4、刷新状态控制"></a>4、刷新状态控制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 刷新状态控制</span><br><span class="line">/** 进入刷新状态 */</span><br><span class="line">- (void)beginRefreshing;</span><br><span class="line">- (void)beginRefreshingWithCompletionBlock:(void (^)(void))completionBlock;</span><br><span class="line">/** 开始刷新后的回调(进入刷新状态后的回调) */</span><br><span class="line">@property (copy, nonatomic) MJRefreshComponentbeginRefreshingCompletionBlock beginRefreshingCompletionBlock;</span><br><span class="line">/** 结束刷新的回调 */</span><br><span class="line">@property (copy, nonatomic) MJRefreshComponentEndRefreshingCompletionBlock endRefreshingCompletionBlock;</span><br><span class="line">/** 结束刷新状态 */</span><br><span class="line">- (void)endRefreshing;</span><br><span class="line">- (void)endRefreshingWithCompletionBlock:(void (^)(void))completionBlock;</span><br><span class="line">/** 是否正在刷新 */</span><br><span class="line">@property (assign, nonatomic, readonly, getter=isRefreshing) BOOL refreshing;</span><br><span class="line">//- (BOOL)isRefreshing;</span><br><span class="line">/** 刷新状态 一般交给子类内部实现 */</span><br><span class="line">@property (assign, nonatomic) MJRefreshState state;</span><br></pre></td></tr></table></figure>
+<p>具体方法分析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark 进入刷新状态</span><br><span class="line">- (void)beginRefreshing</span><br><span class="line">&#123;</span><br><span class="line">    [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^&#123;</span><br><span class="line">        self.alpha = 1.0;</span><br><span class="line">    &#125;];</span><br><span class="line">    self.pullingPercent = 1.0;</span><br><span class="line">    // 只要正在刷新，就完全显示</span><br><span class="line">    if (self.window) &#123;</span><br><span class="line">        self.state = MJRefreshStateRefreshing;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 预防正在刷新中时，调用本方法使得header inset回置失败</span><br><span class="line">        if (self.state != MJRefreshStateRefreshing) &#123;</span><br><span class="line">            self.state = MJRefreshStateWillRefresh;</span><br><span class="line">            // 刷新(预防从另一个控制器回到这个控制器的情况，回来要重新刷新一下)</span><br><span class="line">            [self setNeedsDisplay];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>上面做了一个动画效果，多加了一个<code>willRefresh</code>的状态，我的理解是为了防止self.window为空的时候，突然刷新崩溃（从另一个页面返回的时候），所以需要一个状态来过渡。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>设置<code>state</code>会调用<code>setNeedsLayout</code>方法；如果<code>self.window</code>为空，把状态改成即将刷新，并调用<code>setNeedsDisplay</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>首先<code>UIView</code>的<code>setNeedsDisplay</code>和<code>setNeedsLayout</code>方法都是异步执行的。而<code>setNeedsDisplay</code>会调用自动调用<code>drawRect</code>方法，这样可以拿到 <code>UIGraphicsGetCurrentContext</code>，就可以绘制了，而<code>setNeedsLayout</code>会默认调用<code>layoutSubViews</code>，就可以处理子视图中的一些数据。</li>
+<li>综上所诉，<code>setNeedsDisplay</code>方便绘图，而<code>layoutSubViews</code>方便出来数据。</li>
+</ul>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//结束刷新</span><br><span class="line">- (void)endRefreshing</span><br><span class="line">&#123;</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        self.state = MJRefreshStateIdle;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>在主线程结束刷新，把刷新状态改为普通闲置状态</p>
+</blockquote>
+</blockquote>
+<h5 id="5、KVO监听"><a href="#5、KVO监听" class="headerlink" title="5、KVO监听"></a>5、KVO监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - KVO监听</span><br><span class="line">- (void)addObservers</span><br><span class="line">&#123;</span><br><span class="line">    NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;</span><br><span class="line">    [self.scrollView addObserver:self forKeyPath:MJRefreshKeyPathContentOffset options:options context:nil];</span><br><span class="line">    [self.scrollView addObserver:self forKeyPath:MJRefreshKeyPathContentSize options:options context:nil];</span><br><span class="line">    self.pan = self.scrollView.panGestureRecognizer;</span><br><span class="line">    [self.pan addObserver:self forKeyPath:MJRefreshKeyPathPanState options:options context:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)removeObservers</span><br><span class="line">&#123;</span><br><span class="line">    [self.superview removeObserver:self forKeyPath:MJRefreshKeyPathContentOffset];</span><br><span class="line">    [self.superview removeObserver:self forKeyPath:MJRefreshKeyPathContentSize];</span><br><span class="line">    [self.pan removeObserver:self forKeyPath:MJRefreshKeyPathPanState];</span><br><span class="line">    self.pan = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    // 遇到这些情况就直接返回</span><br><span class="line">    if (!self.userInteractionEnabled) return;</span><br><span class="line">    </span><br><span class="line">    // 这个就算看不见也需要处理</span><br><span class="line">    if ([keyPath isEqualToString:MJRefreshKeyPathContentSize]) &#123;</span><br><span class="line">        [self scrollViewContentSizeDidChange:change];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 看不见</span><br><span class="line">    if (self.hidden) return;</span><br><span class="line">    if ([keyPath isEqualToString:MJRefreshKeyPathContentOffset]) &#123;</span><br><span class="line">        [self scrollViewContentOffsetDidChange:change];</span><br><span class="line">    &#125; else if ([keyPath isEqualToString:MJRefreshKeyPathPanState]) &#123;</span><br><span class="line">        [self scrollViewPanStateDidChange:change];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>监听<code>ContentOffset</code>、<code>ContentSize</code>、手势的<code>State</code></p>
+</blockquote>
+</blockquote>
+<h5 id="6、回调"><a href="#6、回调" class="headerlink" title="6、回调"></a>6、回调</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 内部方法</span><br><span class="line">- (void)executeRefreshingCallback</span><br><span class="line">&#123;</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        if (self.refreshingBlock) &#123;</span><br><span class="line">            self.refreshingBlock();</span><br><span class="line">        &#125;</span><br><span class="line">        if ([self.refreshingTarget respondsToSelector:self.refreshingAction]) &#123;</span><br><span class="line">            MJRefreshMsgSend(MJRefreshMsgTarget(self.refreshingTarget), self.refreshingAction, self);</span><br><span class="line">        &#125;</span><br><span class="line">        if (self.beginRefreshingCompletionBlock) &#123;</span><br><span class="line">            self.beginRefreshingCompletionBlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p><code>MJRefreshMsgSend</code>是时运行时objc_msgSend，第一个参数代表接收者，第二个参数代表选择子（SEL是选择子的类型），后续参数就是消息中的那些参数，其顺序不变。选择子指的就是方法的名字。</p>
+</blockquote>
+</blockquote>
+<h4 id="二、MJRefreshHeader"><a href="#二、MJRefreshHeader" class="headerlink" title="二、MJRefreshHeader"></a>二、MJRefreshHeader</h4><h5 id="1、初始化（构造方法）"><a href="#1、初始化（构造方法）" class="headerlink" title="1、初始化（构造方法）"></a>1、初始化（构造方法）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 构造方法</span><br><span class="line">+ (instancetype)headerWithRefreshingBlock:(MJRefreshComponentRefreshingBlock)refreshingBlock</span><br><span class="line">&#123;</span><br><span class="line">    MJRefreshHeader *cmp = [[self alloc] init];</span><br><span class="line">    cmp.refreshingBlock = refreshingBlock;</span><br><span class="line">    return cmp;</span><br><span class="line">&#125;</span><br><span class="line">+ (instancetype)headerWithRefreshingTarget:(id)target refreshingAction:(SEL)action</span><br><span class="line">&#123;</span><br><span class="line">    MJRefreshHeader *cmp = [[self alloc] init];</span><br><span class="line">    [cmp setRefreshingTarget:target refreshingAction:action];</span><br><span class="line">    return cmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2、覆盖父类方法"><a href="#2、覆盖父类方法" class="headerlink" title="2、覆盖父类方法"></a>2、覆盖父类方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)prepare</span><br><span class="line">&#123;</span><br><span class="line">    [super prepare];</span><br><span class="line">    </span><br><span class="line">    // 设置key</span><br><span class="line">    self.lastUpdatedTimeKey = MJRefreshHeaderLastUpdatedTimeKey;</span><br><span class="line">    </span><br><span class="line">    // 设置高度</span><br><span class="line">    self.mj_h = MJRefreshHeaderHeight;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)placeSubviews</span><br><span class="line">&#123;</span><br><span class="line">    [super placeSubviews];</span><br><span class="line">    </span><br><span class="line">    // 设置y值(当自己(头部)的高度发生改变了，肯定要重新调整Y值，所以放到placeSubviews方法中设置y值)</span><br><span class="line">    self.mj_y = - self.mj_h - self.ignoredScrollViewContentInsetTop;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p><code>prepare</code>设置一下初始化值数据。而<code>placeSubViews</code>更新一下UI。</p>
+</blockquote>
+</blockquote>
+<h5 id="3、滚动时偏移值变化以及状态的改变"><a href="#3、滚动时偏移值变化以及状态的改变" class="headerlink" title="3、滚动时偏移值变化以及状态的改变"></a>3、滚动时偏移值变化以及状态的改变</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">//当scrollView的contentOffset发生改变的时候调用</span><br><span class="line">- (void)scrollViewContentOffsetDidChange:(NSDictionary *)change</span><br><span class="line">&#123;</span><br><span class="line">    [super scrollViewContentOffsetDidChange:change];</span><br><span class="line">    </span><br><span class="line">    // 在刷新的refreshing状态</span><br><span class="line">    if (self.state == MJRefreshStateRefreshing) &#123;</span><br><span class="line">        // 暂时保留</span><br><span class="line">        if (self.window == nil) return;</span><br><span class="line">        </span><br><span class="line">        // sectionheader停留解决</span><br><span class="line">        //刷新的时候:偏移量（self.scrollView.mj_offsetY） = 状态栏 + 导航栏 + header的高度（54+64=118 iphoneX则为54+88=142）</span><br><span class="line">        //内边距高度（_scrollViewOriginalInset.top）= 状态栏 + 导航栏 = 64</span><br><span class="line">        CGFloat insetT = - self.scrollView.mj_offsetY &gt; _scrollViewOriginalInset.top ? - self.scrollView.mj_offsetY : _scrollViewOriginalInset.top;</span><br><span class="line">        insetT = insetT &gt; self.mj_h + _scrollViewOriginalInset.top ? self.mj_h + _scrollViewOriginalInset.top : insetT;</span><br><span class="line">        self.scrollView.mj_insetT = insetT;</span><br><span class="line">        </span><br><span class="line">        self.insetTDelta = _scrollViewOriginalInset.top - insetT;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 跳转到下一个控制器时，contentInset可能会变</span><br><span class="line">     _scrollViewOriginalInset = self.scrollView.mj_inset;</span><br><span class="line">    </span><br><span class="line">    // 当前的contentOffset</span><br><span class="line">    CGFloat offsetY = self.scrollView.mj_offsetY;</span><br><span class="line">    // 头部控件刚好出现的offsetY</span><br><span class="line">    CGFloat happenOffsetY = - self.scrollViewOriginalInset.top;</span><br><span class="line">    </span><br><span class="line">    // 如果是向上滚动到看不见头部控件，直接返回</span><br><span class="line">    // &gt;= -&gt; &gt;</span><br><span class="line">    if (offsetY &gt; happenOffsetY) return;</span><br><span class="line">    </span><br><span class="line">    // 普通闲置 即将刷新 的临界点</span><br><span class="line">    //个人觉得normal2pullingOffsetY应该是头部完全出来时的Y轴偏移值</span><br><span class="line">    CGFloat normal2pullingOffsetY = happenOffsetY - self.mj_h;</span><br><span class="line">    CGFloat pullingPercent = (happenOffsetY - offsetY) / self.mj_h;</span><br><span class="line">    </span><br><span class="line">    if (self.scrollView.isDragging) &#123; // 如果正在拖拽</span><br><span class="line">        self.pullingPercent = pullingPercent;</span><br><span class="line">        if (self.state == MJRefreshStateIdle &amp;&amp; offsetY &lt; normal2pullingOffsetY) &#123; //手指拖拽中，状态是默认状态以及下拉距离（偏移值）大于临界点距离</span><br><span class="line">            // 转为可以进行刷新状态</span><br><span class="line">            self.state = MJRefreshStatePulling;</span><br><span class="line">        &#125; else if (self.state == MJRefreshStatePulling &amp;&amp; offsetY &gt;= normal2pullingOffsetY) &#123;</span><br><span class="line">        //手指拖拽中，状态是默认状态以及下拉距离（偏移值）小于临界点距离，也就是拖得比较下</span><br><span class="line">            // 转为普通状态</span><br><span class="line">            self.state = MJRefreshStateIdle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (self.state == MJRefreshStatePulling) &#123;// 即将刷新 &amp;&amp; 手松开</span><br><span class="line">        // 开始刷新</span><br><span class="line">        [self beginRefreshing];</span><br><span class="line">    &#125; else if (pullingPercent &lt; 1) &#123;</span><br><span class="line">        self.pullingPercent = pullingPercent;//手松开后，默认状态时，恢复self.pullingPercent</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>状态切换的因素有两个：一个是下拉的距离是否超过临界值，另一个是 手指是否离开屏幕。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>手指还贴在屏幕的时候是不能进行刷新的。即使在下拉的距离超过了临界距离（状态栏 + 导航栏 + header高度），如果手指没有离开屏幕，那么也不能马上进行刷新，而是将状态切换为：可以刷新。一旦手指离开了屏幕，马上将状态切换为正在刷新。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>普通闲置与即将刷新的分界点，看下图，一目了然</p>
+</blockquote>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1396454-b8227fd41003dcf4?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<h5 id="4、改变状态时的相应操作（setter方法）"><a href="#4、改变状态时的相应操作（setter方法）" class="headerlink" title="4、改变状态时的相应操作（setter方法）"></a>4、改变状态时的相应操作（setter方法）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">- (void)setState:(MJRefreshState)state</span><br><span class="line">&#123;</span><br><span class="line">    MJRefreshCheckState</span><br><span class="line">    //MJRefreshCheckState是宏，其实也就是下面语句，为了检测状态是否相同，相同则return</span><br><span class="line">//    MJRefreshState oldState = self.state;</span><br><span class="line">//    if (state == oldState) &#123;</span><br><span class="line">//        NSLog(@&quot;相同&quot;);</span><br><span class="line">//        return;</span><br><span class="line">//    &#125;</span><br><span class="line">//    [super setState:state];</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    // 根据状态做事情</span><br><span class="line">    if (state == MJRefreshStateIdle) &#123;</span><br><span class="line">        if (oldState != MJRefreshStateRefreshing) return;</span><br><span class="line">        </span><br><span class="line">        // 保存刷新时间</span><br><span class="line">        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:self.lastUpdatedTimeKey];</span><br><span class="line">        [[NSUserDefaults standardUserDefaults] synchronize];</span><br><span class="line">        </span><br><span class="line">        // 恢复inset和offset</span><br><span class="line">        [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^&#123;</span><br><span class="line">            //此时要加上scrollView刷新时跟普通闲置时的偏移差值(刷新时偏移值为118或者142，self.insetTDelta值为header高度-54)，恢复后self.scrollView.mj_insetT = 64（或者88）</span><br><span class="line">            self.scrollView.mj_insetT += self.insetTDelta;</span><br><span class="line">            </span><br><span class="line">            // 自动调整透明度</span><br><span class="line">            if (self.isAutomaticallyChangeAlpha) self.alpha = 0.0;</span><br><span class="line">        &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">            self.pullingPercent = 0.0;</span><br><span class="line">            </span><br><span class="line">            if (self.endRefreshingCompletionBlock) &#123;</span><br><span class="line">                self.endRefreshingCompletionBlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125; else if (state == MJRefreshStateRefreshing) &#123;</span><br><span class="line">         dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^&#123;</span><br><span class="line">                CGFloat top = self.scrollViewOriginalInset.top + self.mj_h;</span><br><span class="line">                // 增加滚动区域top</span><br><span class="line">                self.scrollView.mj_insetT = top;</span><br><span class="line">                //增加滚动区域top(赋值给scrollView.inset.top)</span><br><span class="line">                CGPoint offset = self.scrollView.contentOffset;</span><br><span class="line">                offset.y = -top;</span><br><span class="line">                [self.scrollView setContentOffset:offset animated:NO];</span><br><span class="line">            &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">                //执行正在刷新的回调</span><br><span class="line">                [self executeRefreshingCallback];</span><br><span class="line">            &#125;];</span><br><span class="line">         &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>注意<code>[super setState:state]</code>的位置，等基类的<code>state</code>赋值给<code>oldState</code>，再跟新状态对比，对比完后，再<code>[super setState:state]</code>调用基类,从而赋值基类<code>state</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>该方法主要要注意状态在普通闲置状态以及刷新状态的scrollView.contentOffset变化</p>
+</blockquote>
+</blockquote>
+<h4 id="三、MJRefreshStateHeader"><a href="#三、MJRefreshStateHeader" class="headerlink" title="三、MJRefreshStateHeader"></a>三、MJRefreshStateHeader</h4><p>该类是<code>MJRefreshHeader</code>的子类，主要用来设置显示上一次刷新时间的label：<code>lastUpdatedTimeLabel</code>和显示刷新状态的label：<code>stateLabel</code>属性等</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1396454-9854a686dd292158?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<h5 id="1、stateLabel初始化方法"><a href="#1、stateLabel初始化方法" class="headerlink" title="1、stateLabel初始化方法"></a>1、stateLabel初始化方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (void)setTitle:(NSString *)title forState:(MJRefreshState)state</span><br><span class="line">&#123;</span><br><span class="line">    if (title == nil) return;</span><br><span class="line">    self.stateTitles[@(state)] = title;</span><br><span class="line">    self.stateLabel.text = self.stateTitles[@(self.state)];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - 覆盖父类的方法</span><br><span class="line">- (void)prepare</span><br><span class="line">&#123;</span><br><span class="line">    [super prepare];</span><br><span class="line">    </span><br><span class="line">    // 初始化间距</span><br><span class="line">    self.labelLeftInset = MJRefreshLabelLeftInset;</span><br><span class="line">    </span><br><span class="line">    // 初始化文字</span><br><span class="line">    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshHeaderIdleText] forState:MJRefreshStateIdle];</span><br><span class="line">    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshHeaderPullingText] forState:MJRefreshStatePulling];</span><br><span class="line">    [self setTitle:[NSBundle mj_localizedStringForKey:MJRefreshHeaderRefreshingText] forState:MJRefreshStateRefreshing];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p><code>prepare</code>初始化方法，实现本地化（不同字体），并根据不同状态赋值给<code>stateLabel</code></p>
+</blockquote>
+</blockquote>
+<h5 id="2、lastUpdatedLabel赋值"><a href="#2、lastUpdatedLabel赋值" class="headerlink" title="2、lastUpdatedLabel赋值"></a>2、lastUpdatedLabel赋值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark key的处理</span><br><span class="line">- (void)setLastUpdatedTimeKey:(NSString *)lastUpdatedTimeKey</span><br><span class="line">&#123;</span><br><span class="line">    [super setLastUpdatedTimeKey:lastUpdatedTimeKey];</span><br><span class="line">    </span><br><span class="line">    // 如果label隐藏了，就不用再处理</span><br><span class="line">    if (self.lastUpdatedTimeLabel.hidden) return;</span><br><span class="line">    </span><br><span class="line">    NSDate *lastUpdatedTime = [[NSUserDefaults standardUserDefaults] objectForKey:lastUpdatedTimeKey];</span><br><span class="line">    </span><br><span class="line">    // 如果有block</span><br><span class="line">    //用户定义的时间格式</span><br><span class="line">    if (self.lastUpdatedTimeText) &#123;</span><br><span class="line">        self.lastUpdatedTimeLabel.text = self.lastUpdatedTimeText(lastUpdatedTime);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (lastUpdatedTime) &#123;</span><br><span class="line">        // 1.获得年月日</span><br><span class="line">        NSCalendar *calendar = [self currentCalendar];</span><br><span class="line">        NSUInteger unitFlags = NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay |NSCalendarUnitHour |NSCalendarUnitMinute;</span><br><span class="line">        NSDateComponents *cmp1 = [calendar components:unitFlags fromDate:lastUpdatedTime];</span><br><span class="line">        NSDateComponents *cmp2 = [calendar components:unitFlags fromDate:[NSDate date]];</span><br><span class="line">        </span><br><span class="line">        // 2.格式化日期</span><br><span class="line">        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];</span><br><span class="line">        BOOL isToday = NO;</span><br><span class="line">        if ([cmp1 day] == [cmp2 day]) &#123; // 今天</span><br><span class="line">            formatter.dateFormat = @&quot; HH:mm&quot;;  //返回11：11样式</span><br><span class="line">            isToday = YES;</span><br><span class="line">        &#125; else if ([cmp1 year] == [cmp2 year]) &#123; // 今年</span><br><span class="line">            formatter.dateFormat = @&quot;MM-dd HH:mm&quot;; //返回02-08 11：11样式</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            formatter.dateFormat = @&quot;yyyy-MM-dd HH:mm&quot;; //返回2018-02-08 11：11样式</span><br><span class="line">        &#125;</span><br><span class="line">        NSString *time = [formatter stringFromDate:lastUpdatedTime];</span><br><span class="line">        </span><br><span class="line">        // 3.显示日期</span><br><span class="line">        //[NSBundle mj_localizedStringForKey:MJRefreshHeaderLastTimeText] 会返回简体（英文、繁体）的 【最后更新：】</span><br><span class="line">        //isToday ? [NSBundle mj_localizedStringForKey:MJRefreshHeaderDateTodayText] : @&quot;&quot; 如果上一次刷新也是今天，则返回简体（英文、繁体）的 【今天】,不是则返回空字符串</span><br><span class="line">        self.lastUpdatedTimeLabel.text = [NSString stringWithFormat:@&quot;%@%@%@&quot;,</span><br><span class="line">                                          [NSBundle mj_localizedStringForKey:MJRefreshHeaderLastTimeText],</span><br><span class="line">                                          isToday ? [NSBundle mj_localizedStringForKey:MJRefreshHeaderDateTodayText] : @&quot;&quot;,</span><br><span class="line">                                          time];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    //没有获得上次更新时间</span><br><span class="line">        self.lastUpdatedTimeLabel.text = [NSString stringWithFormat:@&quot;%@%@&quot;,</span><br><span class="line">                                          [NSBundle mj_localizedStringForKey:MJRefreshHeaderLastTimeText],</span><br><span class="line">                                          [NSBundle mj_localizedStringForKey:MJRefreshHeaderNoneLastDateText]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>注意一下时间格式，本地化以及不同上次刷新时间的<code>lastUpdatedTimeLabel</code>显示<br>上面代码还给用户自定义时间格式，没有才使用默认，默认的格式逻辑显示，我已在上面注释清楚</p>
+</blockquote>
+</blockquote>
+<p><code>MJRefreshNormalHeader</code>和<code>MJRefreshGifHeader</code>都是<code>MJRefreshStateHeader</code>的子类，前者和后者的布局一样，不同的就是<code>heade</code>r左边一个是菊花的样式，另外一个是gif，详看下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1396454-71c724779019fa3e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br>由此看来，这两种形式的<code>header</code>都有相同的共性，我们在做类似的功能时，如果有几个控件或者几个类共性一样，比如说，一个保险类（InsuranceClass），一个房地产类（RealEstateClass），他们可以有一个基类销售类（SalesClass），SalesClass拥有销售员工、顾客、金额、销售日期等 保险类 和 房地产类 需要的共同属性</p>
+<h4 id="四、MJRefreshNormalHeader"><a href="#四、MJRefreshNormalHeader" class="headerlink" title="四、MJRefreshNormalHeader"></a>四、MJRefreshNormalHeader</h4><blockquote>
+<blockquote>
+<p>1、在<code>MJRefreshStateHeader</code>上添加了箭头和菊花</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2、布局这两种样式<code>View</code>,且在状态切换时更改样式切换</p>
+</blockquote>
+</blockquote>
+<h5 id="1、圈圈（菊花）和箭头的布局"><a href="#1、圈圈（菊花）和箭头的布局" class="headerlink" title="1、圈圈（菊花）和箭头的布局"></a>1、圈圈（菊花）和箭头的布局</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">- (void)placeSubviews</span><br><span class="line">&#123;</span><br><span class="line">    [super placeSubviews];</span><br><span class="line">    </span><br><span class="line">    // 箭头的中心点</span><br><span class="line">    CGFloat arrowCenterX = self.mj_w * 0.5;</span><br><span class="line">    if (!self.stateLabel.hidden) &#123;</span><br><span class="line">        CGFloat stateWidth = self.stateLabel.mj_textWith; //状态label文字的宽度</span><br><span class="line">        CGFloat timeWidth = 0.0;</span><br><span class="line">        if (!self.lastUpdatedTimeLabel.hidden) &#123;</span><br><span class="line">            timeWidth = self.lastUpdatedTimeLabel.mj_textWith; //时间label文字的宽度</span><br><span class="line">        &#125;</span><br><span class="line">        CGFloat textWidth = MAX(stateWidth, timeWidth); //求出一个最宽的文字宽度</span><br><span class="line">        arrowCenterX -= textWidth / 2 + self.labelLeftInset; //箭头(菊花)中心点x还要减去（最宽的文字宽度/2 + 文字距离圈圈、箭头的距离）</span><br><span class="line">    &#125;</span><br><span class="line">    //中心点y设置为header的高度的一半</span><br><span class="line">    CGFloat arrowCenterY = self.mj_h * 0.5;</span><br><span class="line">    CGPoint arrowCenter = CGPointMake(arrowCenterX, arrowCenterY);</span><br><span class="line">    </span><br><span class="line">    // 箭头</span><br><span class="line">    if (self.arrowView.constraints.count == 0) &#123; //箭头没有其他布局约束</span><br><span class="line">        self.arrowView.mj_size = self.arrowView.image.size; //箭头大小跟提供的arrowView图片大小一致</span><br><span class="line">        self.arrowView.center = arrowCenter;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    // 圈圈</span><br><span class="line">    if (self.loadingView.constraints.count == 0) &#123; //圈圈(菊花)没有其他布局约束</span><br><span class="line">        self.loadingView.center = arrowCenter;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    self.arrowView.tintColor = self.stateLabel.textColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>上面代码主要实现了圈圈（菊花）和箭头的布局，需要注意的是让箭头菊花紧跟刷新文字或者状态文字居中的逻辑，我已在注释写明</p>
+</blockquote>
+</blockquote>
+<h5 id="2、不同状态下菊花和箭头的互换"><a href="#2、不同状态下菊花和箭头的互换" class="headerlink" title="2、不同状态下菊花和箭头的互换"></a>2、不同状态下菊花和箭头的互换</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">- (void)setState:(MJRefreshState)state</span><br><span class="line">&#123;</span><br><span class="line">    MJRefreshCheckState</span><br><span class="line">    </span><br><span class="line">    // 根据状态做事情</span><br><span class="line">    if (state == MJRefreshStateIdle) &#123;</span><br><span class="line">        if (oldState == MJRefreshStateRefreshing) &#123; //上次状态是正在刷新，准备改变成普通闲置状态</span><br><span class="line">            self.arrowView.transform = CGAffineTransformIdentity; //仿射变换初始化</span><br><span class="line">            </span><br><span class="line">            [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^&#123;</span><br><span class="line">                self.loadingView.alpha = 0.0;  //把菊花变成完全透明</span><br><span class="line">            &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">                // 如果执行完动画发现不是idle状态，就直接返回，进入其他状态</span><br><span class="line">                if (self.state != MJRefreshStateIdle) return;</span><br><span class="line">//                self.loadingView.backgroundColor = [UIColor greenColor];</span><br><span class="line">                self.loadingView.alpha = 1.0; //菊花变成完全显示 （为什么要这样？求大佬告诉）</span><br><span class="line">                [self.loadingView stopAnimating]; //菊花停止转动，同时会隐藏菊花（loadingView.hidesWhenStopped = YES;）</span><br><span class="line">                self.arrowView.hidden = NO; //箭头显示</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125; else &#123; //上次状态是拖拽或者普通闲置状态，准备改变成普通闲置状态 --&gt; 把菊花停止转动，菊花隐藏，箭头显示</span><br><span class="line">            [self.loadingView stopAnimating];</span><br><span class="line">            self.arrowView.hidden = NO;</span><br><span class="line">            [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^&#123;</span><br><span class="line">                self.arrowView.transform = CGAffineTransformIdentity; //在操作结束之后对箭头设置量进行还原</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (state == MJRefreshStatePulling) &#123; //拖拽状态：菊花停止转动，箭头显示</span><br><span class="line">        [self.loadingView stopAnimating];</span><br><span class="line">        self.arrowView.hidden = NO;</span><br><span class="line">        [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^&#123;</span><br><span class="line">            self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - M_PI);//(改变箭头的方向，但是为什么要0.000001 - M_PI？)</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125; else if (state == MJRefreshStateRefreshing) &#123; //正在刷新状态：菊花完全显示并且开始转动，箭头隐藏</span><br><span class="line">        self.loadingView.alpha = 1.0; // 防止refreshing -&gt; idle的动画完毕动作没有被执行</span><br><span class="line">        [self.loadingView startAnimating];</span><br><span class="line">        self.arrowView.hidden = YES;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>通过不同的状态控制菊花和箭头的隐藏和消失，及他们的动画效果，如箭头的朝上朝下，和菊花的转与不转</p>
+</blockquote>
+</blockquote>
+<h4 id="四、MJRefreshGifHeader"><a href="#四、MJRefreshGifHeader" class="headerlink" title="四、MJRefreshGifHeader"></a>四、MJRefreshGifHeader</h4><blockquote>
+<blockquote>
+<p>1、加载不同状态对应的动画图片<br>2、设置不同状态对应的动画时间</p>
+</blockquote>
+</blockquote>
+<h5 id="1、懒加载"><a href="#1、懒加载" class="headerlink" title="1、懒加载"></a>1、懒加载</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 懒加载</span><br><span class="line">//gigView显示gif</span><br><span class="line">- (UIImageView *)gifView</span><br><span class="line">&#123;</span><br><span class="line">    if (!_gifView) &#123; </span><br><span class="line">        UIImageView *gifView = [[UIImageView alloc] init]; </span><br><span class="line">        [self addSubview:_gifView = gifView]; </span><br><span class="line">    &#125; </span><br><span class="line">    return _gifView; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSMutableDictionary *)stateImages </span><br><span class="line">&#123; </span><br><span class="line">    if (!_stateImages) &#123; </span><br><span class="line">        self.stateImages = [NSMutableDictionary dictionary]; </span><br><span class="line">    &#125; </span><br><span class="line">    return _stateImages; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSMutableDictionary *)stateDurations </span><br><span class="line">&#123; </span><br><span class="line">    if (!_stateDurations) &#123; </span><br><span class="line">        self.stateDurations = [NSMutableDictionary dictionary]; </span><br><span class="line">    &#125; </span><br><span class="line">    return _stateDurations; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2、设置不通过状态对应的动画图片以及动画时间"><a href="#2、设置不通过状态对应的动画图片以及动画时间" class="headerlink" title="2、设置不通过状态对应的动画图片以及动画时间"></a>2、设置不通过状态对应的动画图片以及动画时间</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 公共方法</span><br><span class="line">- (void)setImages:(NSArray *)images duration:(NSTimeInterval)duration forState:(MJRefreshState)state </span><br><span class="line">&#123; </span><br><span class="line">    if (images == nil) return; </span><br><span class="line">    </span><br><span class="line">    self.stateImages[@(state)] = images; </span><br><span class="line">    self.stateDurations[@(state)] = @(duration); </span><br><span class="line">    </span><br><span class="line">    /* 根据图片设置控件的高度 */ </span><br><span class="line">    UIImage *image = [images firstObject]; </span><br><span class="line">    if (image.size.height &gt; self.mj_h) &#123; </span><br><span class="line">        self.mj_h = image.size.height; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setImages:(NSArray *)images forState:(MJRefreshState)state </span><br><span class="line">&#123; </span><br><span class="line">    [self setImages:images duration:images.count * 0.1 forState:state]; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3、实现图片的切换和gifView布局"><a href="#3、实现图片的切换和gifView布局" class="headerlink" title="3、实现图片的切换和gifView布局"></a>3、实现图片的切换和gifView布局</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - 实现父类的方法</span><br><span class="line">- (void)prepare</span><br><span class="line">&#123;</span><br><span class="line">    [super prepare];</span><br><span class="line">    </span><br><span class="line">    // 初始化间距</span><br><span class="line">    self.labelLeftInset = 20;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//根据拖拽进度设置透明度</span><br><span class="line">- (void)setPullingPercent:(CGFloat)pullingPercent</span><br><span class="line">&#123;</span><br><span class="line">    [super setPullingPercent:pullingPercent];</span><br><span class="line">    NSArray *images = self.stateImages[@(MJRefreshStateIdle)]; //选择闲置状态下的图片组</span><br><span class="line">    if (self.state != MJRefreshStateIdle || images.count == 0) return; //状态不是闲置或者图片为空，则直接返回</span><br><span class="line">    // 停止动画</span><br><span class="line">    [self.gifView stopAnimating];</span><br><span class="line">    // 设置当前需要显示的图片</span><br><span class="line">    NSUInteger index =  images.count * pullingPercent;</span><br><span class="line">    if (index &gt;= images.count) index = images.count - 1;</span><br><span class="line">    self.gifView.image = images[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)placeSubviews</span><br><span class="line">&#123;</span><br><span class="line">    [super placeSubviews];</span><br><span class="line">    </span><br><span class="line">    if (self.gifView.constraints.count) return; //gifView没有约束，直接返回</span><br><span class="line">    </span><br><span class="line">    self.gifView.frame = self.bounds;</span><br><span class="line">    if (self.stateLabel.hidden &amp;&amp; self.lastUpdatedTimeLabel.hidden) &#123; //上次刷新时间和状态文字都隐藏了，图片内容就居ifView中间显示</span><br><span class="line">        self.gifView.contentMode = UIViewContentModeCenter;</span><br><span class="line">    &#125; else &#123; //图片居gifView右边显示</span><br><span class="line">        self.gifView.contentMode = UIViewContentModeRight;</span><br><span class="line">        </span><br><span class="line">        //下面代码同样也是为了让gifView紧挨着文字居中显示。算出最长的文字，通过减去文字的一般宽度，调整gifView的x值，跟NormalHeader的方法一样，详细请看normalHeader</span><br><span class="line">        CGFloat stateWidth = self.stateLabel.mj_textWith;</span><br><span class="line">        CGFloat timeWidth = 0.0;</span><br><span class="line">        if (!self.lastUpdatedTimeLabel.hidden) &#123;</span><br><span class="line">            timeWidth = self.lastUpdatedTimeLabel.mj_textWith;</span><br><span class="line">        &#125;</span><br><span class="line">        CGFloat textWidth = MAX(stateWidth, timeWidth);</span><br><span class="line">        self.gifView.mj_w = self.mj_w * 0.5 - textWidth * 0.5 - self.labelLeftInset;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setState:(MJRefreshState)state</span><br><span class="line">&#123;</span><br><span class="line">    MJRefreshCheckState</span><br><span class="line">    </span><br><span class="line">    // 根据状态做事情</span><br><span class="line">    if (state == MJRefreshStatePulling || state == MJRefreshStateRefreshing) &#123; //状态变为拖拽或者正在刷新，获取各自状态该显示的图片组</span><br><span class="line">        NSArray *images = self.stateImages[@(state)];</span><br><span class="line">        if (images.count == 0) return;</span><br><span class="line">        </span><br><span class="line">        [self.gifView stopAnimating];</span><br><span class="line">        if (images.count == 1) &#123; // 单张图片</span><br><span class="line">            self.gifView.image = [images lastObject];</span><br><span class="line">        &#125; else &#123; // 多张图片</span><br><span class="line">            self.gifView.animationImages = images;</span><br><span class="line">            self.gifView.animationDuration = [self.stateDurations[@(state)] doubleValue];</span><br><span class="line">            [self.gifView startAnimating];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (state == MJRefreshStateIdle) &#123;</span><br><span class="line">        [self.gifView stopAnimating];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>到此，我对<code>MJRefreshHeader</code>那一块的源码已经读完，剩下<code>MJRefreshFooter</code>，但由于实现逻辑基本一致，故在此不再详说。迟点，发现<code>MJRefreshFooter</code>有其他特殊之处，我会更新此文，谢谢大家！</em></p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><h5 id="1、巧用Model"><a href="#1、巧用Model" class="headerlink" title="1、巧用Model"></a>1、巧用Model</h5><p>我们可能见到一些开发者会在<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    MJExample *exam = self.examples[indexPath.section];</span><br><span class="line">    UIViewController *vc = [[exam.vcClass alloc] init];</span><br><span class="line">    vc.title = exam.titles[indexPath.row];</span><br><span class="line">    [vc setValue:exam.methods[indexPath.row] forKeyPath:@&quot;method&quot;];</span><br><span class="line">    [self.navigationController pushViewController:vc animated:YES];</span><br><span class="line">    if (indexPath.row == 0) &#123;</span><br><span class="line">        UIViewController *test1 = [UIViewController new];</span><br><span class="line">        test1.title = @&quot;test1&quot;;</span><br><span class="line">        [self.navigationController pushViewController:test1 animated:YES];</span><br><span class="line">    &#125;else if (indexPath.row == 1) &#123;</span><br><span class="line">        UIViewController *test2 = [UIViewController new];</span><br><span class="line">        test2.title = @&quot;test2&quot;;</span><br><span class="line">        [self.navigationController pushViewController:test2 animated:YES];</span><br><span class="line">    &#125;else if (indexPath.row == 2) &#123;</span><br><span class="line">        UIViewController *test3 = [UIViewController new];</span><br><span class="line">        test3.title = @&quot;test3&quot;;</span><br><span class="line">        [self.navigationController pushViewController:test3 animated:YES];</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>这样会造成<figure class="highlight plain"><figcaption><span>else 或者 switch，我们可以用Model很好的解决这个问题，代码如下：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">- (NSArray *)examples</span><br><span class="line">&#123;</span><br><span class="line">    if (!_examples) &#123;</span><br><span class="line">        MJExample *exam0 = [[MJExample alloc] init];</span><br><span class="line">        exam0.header = MJExample00;</span><br><span class="line">        exam0.vcClass = [MJTableViewController class];</span><br><span class="line">        exam0.titles = @[@&quot;默认&quot;, @&quot;动画图片&quot;, @&quot;隐藏时间&quot;, @&quot;隐藏状态和时间&quot;, @&quot;自定义文字&quot;, @&quot;自定义刷新控件&quot;];</span><br><span class="line">        exam0.methods = @[@&quot;example01&quot;, @&quot;example02&quot;, @&quot;example03&quot;, @&quot;example04&quot;, @&quot;example05&quot;, @&quot;example06&quot;];</span><br><span class="line">        </span><br><span class="line">        MJExample *exam1 = [[MJExample alloc] init];</span><br><span class="line">        exam1.header = MJExample10;</span><br><span class="line">        exam1.vcClass = [MJTableViewController class];</span><br><span class="line">        exam1.titles = @[@&quot;默认&quot;, @&quot;动画图片&quot;, @&quot;隐藏刷新状态的文字&quot;, @&quot;全部加载完毕&quot;, @&quot;禁止自动加载&quot;, @&quot;自定义文字&quot;, @&quot;加载后隐藏&quot;, @&quot;自动回弹的上拉01&quot;, @&quot;自动回弹的上拉02&quot;, @&quot;自定义刷新控件(自动刷新)&quot;, @&quot;自定义刷新控件(自动回弹)&quot;];</span><br><span class="line">        exam1.methods = @[@&quot;example11&quot;, @&quot;example12&quot;, @&quot;example13&quot;, @&quot;example14&quot;, @&quot;example15&quot;, @&quot;example16&quot;, @&quot;example17&quot;, @&quot;example18&quot;, @&quot;example19&quot;, @&quot;example20&quot;, @&quot;example21&quot;];</span><br><span class="line">        </span><br><span class="line">        MJExample *exam2 = [[MJExample alloc] init];</span><br><span class="line">        exam2.header = MJExample20;</span><br><span class="line">        exam2.vcClass = [MJCollectionViewController class];</span><br><span class="line">        exam2.titles = @[@&quot;上下拉刷新&quot;];</span><br><span class="line">        exam2.methods = @[@&quot;example21&quot;];</span><br><span class="line">        </span><br><span class="line">        MJExample *exam3 = [[MJExample alloc] init];</span><br><span class="line">        exam3.header = MJExample30;</span><br><span class="line">        exam3.vcClass = [MJWebViewViewController class];</span><br><span class="line">        exam3.titles = @[@&quot;下拉刷新&quot;];</span><br><span class="line">        exam3.methods = @[@&quot;example31&quot;];</span><br><span class="line">        </span><br><span class="line">        self.examples = @[exam0, exam1, exam2, exam3];</span><br><span class="line">    &#125;</span><br><span class="line">    return _examples;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    MJExample *exam = self.examples[indexPath.section];</span><br><span class="line">    UIViewController *vc = [[exam.vcClass alloc] init];</span><br><span class="line">    vc.title = exam.titles[indexPath.row];</span><br><span class="line">    [vc setValue:exam.methods[indexPath.row] forKeyPath:@&quot;method&quot;];</span><br><span class="line">    [self.navigationController pushViewController:vc animated:YES];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<h6 id="2、跳转巧用"><a href="#2、跳转巧用" class="headerlink" title="2、跳转巧用"></a>2、跳转巧用</h6><p>ViewController.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)tappdeBtn:(id)sender &#123;</span><br><span class="line">    UIViewController *vc = [[BViewController alloc] init];</span><br><span class="line">    vc.title = @&quot;example01&quot;;</span><br><span class="line">    [vc setValue:@&quot;example01&quot; forKeyPath:@&quot;method&quot;];</span><br><span class="line">    [self.navigationController pushViewController:vc animated:YES];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>上面是跳转方法，请留意<figure class="highlight plain"><figcaption><span>setValue:@"example01" forKeyPath:@"method"];```这句代码，下面会详解</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">BViewController.h</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<p>#import “BViewController.h”</p>
+<p>#import “UIViewController+Example.h”</p>
+<p>#define MJPerformSelectorLeakWarning(Stuff) \<br>do { \<br>_Pragma(“clang diagnostic push”) \<br>_Pragma(“clang diagnostic ignored \”-Warc-performSelector-leaks\””) \<br>Stuff; \<br>_Pragma(“clang diagnostic pop”) \<br>} while (0)</p>
+<p>@implementation BViewController</p>
+<ul>
+<li><p>(void)viewDidLoad {<br>  [super viewDidLoad];<br>  MJPerformSelectorLeakWarning(</p>
+<pre><code>[self performSelector:NSSelectorFromString(self.method) withObject:nil];
+);
+</code></pre><p>}</p>
+</li>
+<li><p>(void)example01<br>{<br>  NSLog(@”进入此方法”);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">结果：</span><br><span class="line">![image](http://upload-images.jianshu.io/upload_images/1396454-521549cda32d980a?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">&gt;&gt;1、由上可以看到```[self performSelector:NSSelectorFromString(self.method) withObject:nil];```没有指明方法名，仍可以调用```- (void)example01()```,这是运用了```runtime```的黑魔法，定义了```UIViewController+Example```分类方法，```runtime```的使用可以看我之前的文章--&gt;[iOS进阶之runtime作用](https://juejin.im/editor/posts/5a3cb57051882506a463cf1a)</span><br><span class="line"></span><br><span class="line">&gt;&gt;2、```MJPerformSelectorLeakWarning( );```如果selector是在运行时才确定的，performSelector时，若先把selector保存起来，等到某事件发生后再调用，相当于在动态绑定之上再使用动态绑定，不过这是编译器不知道要执行的selector是什么，因为这必须到了运行时才能确定，使用这种特性的代价是，如果在ARC下编译代码，编译器会发生警告,可用```#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;```忽略警告</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>#import &lt;UIKit/UIKit.h&gt;</p>
+<p>@interface UIViewController (Example)<br>@property (copy, nonatomic) NSString *method;<br>@end</p>
+<hr>
+<p>#import “UIViewController+Example.h”</p>
+<p>#import &lt;objc/runtime.h&gt;</p>
+<p>@implementation UIViewController (Example)</p>
+<p>static char MethodKey;</p>
+<ul>
+<li><p>(void)setMethod:(NSString *)method<br>{<br>  objc_setAssociatedObject(self, &amp;MethodKey, method, OBJC_ASSOCIATION_COPY_NONATOMIC);<br>}</p>
+</li>
+<li><p>(NSString *)method<br>{<br>  return objc_getAssociatedObject(self, &amp;MethodKey);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;这是runtime中为分类添加属性的经典用法，把上面跳转方法中的```[vc setValue:@&quot;example01&quot; forKeyPath:@&quot;method&quot;];```赋值的`example01` 利用`runtime`关联，这样分类中的`method`属性值就为`example01`</span><br><span class="line"></span><br><span class="line">解析一下 `static char`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>比如有这样一个函数<br>exp()<br>{<br>char a[] = “Hello!” ;<br>static char b[] = “Hello!” ;<br>}<br><code>`</code></p>
+<blockquote>
+<blockquote>
+<p>当调用这个函数完后，a[]就不存在了，而b[]依然存在，并且值为hello;</p>
+</blockquote>
+</blockquote>
+<h5 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h5><p><a href="http://blog.csdn.net/shorewb/article/details/51939922" target="_blank" rel="noopener">performSelector系列方法编译器警告-Warc-performSelector-leaks</a></p>
+<p><a href="http://blog.csdn.net/a466468841/article/details/50751503" target="_blank" rel="noopener">#pragma clang diagnostic ignored 用法</a></p>
+<p><a href="https://www.jianshu.com/p/33a28bb14749" target="_blank" rel="noopener">UIView常用的setNeedsDisplay和setNeedsLayout</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://raw.githubusercontent.com/iDwyane/Dwyane.github.io/master/images/wechat-qcode.jpg" alt="Dwyane wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Dwyane
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://nihao6.top/2018/02/14/MJRefresh源码剖析与学习/" title="MJRefresh源码剖析与学习">http://nihao6.top/2018/02/14/MJRefresh源码剖析与学习/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/框架/" rel="tag"># 框架</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/23/YYImage源码剖析与学习/" rel="prev" title="YYImage源码剖析与学习">
+                YYImage源码剖析与学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Dwyane">
+            
+              <p class="site-author-name" itemprop="name">Dwyane</p>
+              <p class="site-description motion-element" itemprop="description">Despite knowing the journey and where it leads, I embrace it and welcome every moment.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iDwyane" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/bb2db3428fff" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MJRefresh"><span class="nav-number">1.</span> <span class="nav-text">MJRefresh</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、MJRefreshComponent"><span class="nav-number">1.1.</span> <span class="nav-text">一、MJRefreshComponent</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-导入文件"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.导入文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-状态枚举"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.状态枚举</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、刷新回调"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、刷新回调</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、刷新状态控制"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、刷新状态控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、KVO监听"><span class="nav-number">1.1.5.</span> <span class="nav-text">5、KVO监听</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、回调"><span class="nav-number">1.1.6.</span> <span class="nav-text">6、回调</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、MJRefreshHeader"><span class="nav-number">1.2.</span> <span class="nav-text">二、MJRefreshHeader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、初始化（构造方法）"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、初始化（构造方法）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、覆盖父类方法"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、覆盖父类方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、滚动时偏移值变化以及状态的改变"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、滚动时偏移值变化以及状态的改变</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、改变状态时的相应操作（setter方法）"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、改变状态时的相应操作（setter方法）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、MJRefreshStateHeader"><span class="nav-number">1.3.</span> <span class="nav-text">三、MJRefreshStateHeader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、stateLabel初始化方法"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、stateLabel初始化方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、lastUpdatedLabel赋值"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、lastUpdatedLabel赋值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、MJRefreshNormalHeader"><span class="nav-number">1.4.</span> <span class="nav-text">四、MJRefreshNormalHeader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、圈圈（菊花）和箭头的布局"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、圈圈（菊花）和箭头的布局</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、不同状态下菊花和箭头的互换"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、不同状态下菊花和箭头的互换</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、MJRefreshGifHeader"><span class="nav-number">1.5.</span> <span class="nav-text">四、MJRefreshGifHeader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、懒加载"><span class="nav-number">1.5.1.</span> <span class="nav-text">1、懒加载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、设置不通过状态对应的动画图片以及动画时间"><span class="nav-number">1.5.2.</span> <span class="nav-text">2、设置不通过状态对应的动画图片以及动画时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、实现图片的切换和gifView布局"><span class="nav-number">1.5.3.</span> <span class="nav-text">3、实现图片的切换和gifView布局</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习"><span class="nav-number">2.</span> <span class="nav-text">学习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、巧用Model"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、巧用Model</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2、跳转巧用"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">2、跳转巧用</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考："><span class="nav-number">2.0.2.</span> <span class="nav-text">参考：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"  (｡♥‿♥｡)>Dwyane</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">15.3k</span>
+  
+</div>
+
+
+<div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
