@@ -92,7 +92,8 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-b8227fd41003dcf4?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-9854a686dd292158?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-71c724779019fa3e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-06-03T14:20:58.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1396454-521549cda32d980a?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-03T14:24:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MJRefresh源码剖析与学习">
 <meta name="twitter:description" content="MJRefresh是李明杰大神的开源框架,这是一款十分优雅的刷新组件库，这开源组件无论从代码风格，可用性，易读性还是兼容性来讲都十分优秀。本文就最新MJRefresh版本来讲解。耐心看下去，本文和纯解读源码的文章不同。本文码字几天，如果对您有帮助，给个鼓励，谢谢大家！ MJRefresh 一、MJRefreshComponent1.导入文件123456#import &amp;lt;UIKit/UIKit">
@@ -334,7 +335,7 @@
           
             <span class="post-updated">
               &nbsp; | &nbsp; 更新于
-              <time itemprop="dateUpdated" datetime="2019-06-03T22:20:58+08:00" content="2019-06-03">
+              <time itemprop="dateUpdated" datetime="2019-06-03T22:24:11+08:00" content="2019-06-03">
                 2019-06-03
               </time>
             </span>
@@ -563,38 +564,29 @@
 <h6 id="2、跳转巧用"><a href="#2、跳转巧用" class="headerlink" title="2、跳转巧用"></a>2、跳转巧用</h6><p>ViewController.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)tappdeBtn:(id)sender &#123;</span><br><span class="line">    UIViewController *vc = [[BViewController alloc] init];</span><br><span class="line">    vc.title = @&quot;example01&quot;;</span><br><span class="line">    [vc setValue:@&quot;example01&quot; forKeyPath:@&quot;method&quot;];</span><br><span class="line">    [self.navigationController pushViewController:vc animated:YES];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <blockquote>
-<p>上面是跳转方法，请留意<figure class="highlight plain"><figcaption><span>setValue:@"example01" forKeyPath:@"method"];```这句代码，下面会详解</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">BViewController.h</span><br></pre></td></tr></table></figure></p>
+<p>上面是跳转方法，请留意<code>[vc setValue:@&quot;example01&quot; forKeyPath:@&quot;method&quot;];</code>这句代码，下面会详解</p>
 </blockquote>
 </blockquote>
-<p>#import “BViewController.h”</p>
-<p>#import “UIViewController+Example.h”</p>
-<p>#define MJPerformSelectorLeakWarning(Stuff) \<br>do { \<br>_Pragma(“clang diagnostic push”) \<br>_Pragma(“clang diagnostic ignored \”-Warc-performSelector-leaks\””) \<br>Stuff; \<br>_Pragma(“clang diagnostic pop”) \<br>} while (0)</p>
-<p>@implementation BViewController</p>
-<ul>
-<li><p>(void)viewDidLoad {<br>  [super viewDidLoad];<br>  MJPerformSelectorLeakWarning(</p>
-<pre><code>[self performSelector:NSSelectorFromString(self.method) withObject:nil];
-);
-</code></pre><p>}</p>
-</li>
-<li><p>(void)example01<br>{<br>  NSLog(@”进入此方法”);<br>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">结果：</span><br><span class="line">![image](http://upload-images.jianshu.io/upload_images/1396454-521549cda32d980a?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">&gt;&gt;1、由上可以看到```[self performSelector:NSSelectorFromString(self.method) withObject:nil];```没有指明方法名，仍可以调用```- (void)example01()```,这是运用了```runtime```的黑魔法，定义了```UIViewController+Example```分类方法，```runtime```的使用可以看我之前的文章--&gt;[iOS进阶之runtime作用](https://juejin.im/editor/posts/5a3cb57051882506a463cf1a)</span><br><span class="line"></span><br><span class="line">&gt;&gt;2、```MJPerformSelectorLeakWarning( );```如果selector是在运行时才确定的，performSelector时，若先把selector保存起来，等到某事件发生后再调用，相当于在动态绑定之上再使用动态绑定，不过这是编译器不知道要执行的selector是什么，因为这必须到了运行时才能确定，使用这种特性的代价是，如果在ARC下编译代码，编译器会发生警告,可用```#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;```忽略警告</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>#import &lt;UIKit/UIKit.h&gt;</p>
-<p>@interface UIViewController (Example)<br>@property (copy, nonatomic) NSString *method;<br>@end</p>
-<hr>
-<p>#import “UIViewController+Example.h”</p>
-<p>#import &lt;objc/runtime.h&gt;</p>
-<p>@implementation UIViewController (Example)</p>
-<p>static char MethodKey;</p>
-<ul>
-<li><p>(void)setMethod:(NSString *)method<br>{<br>  objc_setAssociatedObject(self, &amp;MethodKey, method, OBJC_ASSOCIATION_COPY_NONATOMIC);<br>}</p>
-</li>
-<li><p>(NSString *)method<br>{<br>  return objc_getAssociatedObject(self, &amp;MethodKey);<br>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;这是runtime中为分类添加属性的经典用法，把上面跳转方法中的```[vc setValue:@&quot;example01&quot; forKeyPath:@&quot;method&quot;];```赋值的`example01` 利用`runtime`关联，这样分类中的`method`属性值就为`example01`</span><br><span class="line"></span><br><span class="line">解析一下 `static char`</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>比如有这样一个函数<br>exp()<br>{<br>char a[] = “Hello!” ;<br>static char b[] = “Hello!” ;<br>}<br><code>`</code></p>
+<p>BViewController.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;BViewController.h&quot;</span><br><span class="line">#import &quot;UIViewController+Example.h&quot;</span><br><span class="line"></span><br><span class="line">#define MJPerformSelectorLeakWarning(Stuff) \</span><br><span class="line">do &#123; \</span><br><span class="line">_Pragma(&quot;clang diagnostic push&quot;) \</span><br><span class="line">_Pragma(&quot;clang diagnostic ignored \&quot;-Warc-performSelector-leaks\&quot;&quot;) \</span><br><span class="line">Stuff; \</span><br><span class="line">_Pragma(&quot;clang diagnostic pop&quot;) \</span><br><span class="line">&#125; while (0)</span><br><span class="line"></span><br><span class="line">@implementation BViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    MJPerformSelectorLeakWarning(</span><br><span class="line">                                 [self performSelector:NSSelectorFromString(self.method) withObject:nil];</span><br><span class="line">                                 );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)example01</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;进入此方法&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果：<br><img src="http://upload-images.jianshu.io/upload_images/1396454-521549cda32d980a?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<blockquote>
+<blockquote>
+<p>1、由上可以看到<code>[self performSelector:NSSelectorFromString(self.method) withObject:nil];</code>没有指明方法名，仍可以调用<code>- (void)example01()</code>,这是运用了<code>runtime</code>的黑魔法，定义了<code>UIViewController+Example</code>分类方法，<code>runtime</code>的使用可以看我之前的文章–&gt;<a href="https://juejin.im/editor/posts/5a3cb57051882506a463cf1a" target="_blank" rel="noopener">iOS进阶之runtime作用</a></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2、<code>MJPerformSelectorLeakWarning( );</code>如果selector是在运行时才确定的，performSelector时，若先把selector保存起来，等到某事件发生后再调用，相当于在动态绑定之上再使用动态绑定，不过这是编译器不知道要执行的selector是什么，因为这必须到了运行时才能确定，使用这种特性的代价是，如果在ARC下编译代码，编译器会发生警告,可用<code>#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;</code>忽略警告</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">@interface UIViewController (Example)</span><br><span class="line">@property (copy, nonatomic) NSString *method;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line"></span><br><span class="line">#import &quot;UIViewController+Example.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (Example)</span><br><span class="line"></span><br><span class="line">static char MethodKey;</span><br><span class="line">- (void)setMethod:(NSString *)method</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(self, &amp;MethodKey, method, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)method</span><br><span class="line">&#123;</span><br><span class="line">    return objc_getAssociatedObject(self, &amp;MethodKey);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>这是runtime中为分类添加属性的经典用法，把上面跳转方法中的<code>[vc setValue:@&quot;example01&quot; forKeyPath:@&quot;method&quot;];</code>赋值的<code>example01</code> 利用<code>runtime</code>关联，这样分类中的<code>method</code>属性值就为<code>example01</code></p>
+</blockquote>
+</blockquote>
+<p>解析一下 <code>static char</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">比如有这样一个函数</span><br><span class="line">exp()</span><br><span class="line">&#123;</span><br><span class="line">char a[] = &quot;Hello!&quot; ;</span><br><span class="line">static char b[] = &quot;Hello!&quot; ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <blockquote>
 <p>当调用这个函数完后，a[]就不存在了，而b[]依然存在，并且值为hello;</p>
